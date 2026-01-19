@@ -11,6 +11,7 @@ local cgilua = require"cgilua"
 
 local error = error
 local format, gsub, strfind, strmatch = string.format, string.gsub, string.find, string.match
+local tconcat = table.concat
 local date = os.date
 local escape, unescape = urlcode.escape, urlcode.unescape
 
@@ -20,30 +21,66 @@ local servervariable = cgilua.servervariable
 
 local M = {}
 
-local function optional (what, name)
-	if name ~= nil and name ~= "" then
-		return format("; %s=%s", what, name)
-	else
-		return ""
+	local function optional (what, name)
+		if name ~= nil and name ~= "" then
+			return format("%s=%s", what, name)
+		end
 	end
-end
+
+	local function build (name, value, options)
+		options = options or {}
+		if not name or not value then
+			error("cookie needs a name and a value")
+		end
+
+		local a = {}
+
+		if tonumber (options.expires) then
+			local t = date("!%A, %d-%b-%Y %H:%M:%S GMT", options.expires)
+			a[#a+1] = optional("Expires", t)
+		else
+			a[#a+1] = optional("Expires", options.expires)
+		end
+
+		-- Indicates the number of seconds until the cookie expires. 
+		a[#a+1] = optional("Max-Age", options.max_age)
+
+		-- Domain and Path scope the cookie.
+		a[#a+1] = optional("Domain", options.domain)
+		a[#a+1] = optional("Path", options.path)
+
+		-- If Partitioned is set, secure should also be
+		-- If SameSite=None, Secure should be set
+		local secure =
+	    options.secure
+	    or options.partitioned
+	    or (options.samesite and options.samesite:lower() == "None")
+
+	  -- Enforces HTTPS transport when required.
+	  if secure then
+	  	 a[#a+1] = "Secure"
+	  end
+
+	  -- Prevent access from client-side JavaScript.
+	  -- Default: HttpOnly
+	  if options.httponly ~= false then
+			a[#a+1] = "HttpOnly"
+		end
+
+		-- Mark cookie as partitioned (requires Secure).
+		if options.partitioned then
+			a[#a+1] = "Partitioned"
+		end
+
+		-- SameSite controls cross-site cookie sending.
+		-- Note: SameSite=None requires Secure (enforced above).
+		-- Default: Lax
+		a[#a+1] = optional("SameSite", options.samesite or "Lax")
 
 
-local function build (name, value, options)
-	if not name or not value then
-		error("cookie needs a name and a value")
+		return name .. "=" .. escape(value)..";"..tconcat (a, "; ")
 	end
-	local cookie = name .. "=" .. escape(value)
-	options = options or {}
-	if options.expires then
-		local t = date("!%A, %d-%b-%Y %H:%M:%S GMT", options.expires)
-		cookie = cookie .. optional("expires", t)
-	end
-	cookie = cookie .. optional("path", options.path)
-	cookie = cookie .. optional("domain", options.domain)
-	cookie = cookie .. optional("secure", options.secure)
-	return cookie
-end
+
 
 
 ----------------------------------------------------------------------------
@@ -55,19 +92,6 @@ end
 
 function M.set (name, value, options)
 	header("Set-Cookie", build(name, value, options))
-end
-
-
-----------------------------------------------------------------------------
--- Sets a value to a cookie, with the given options.
--- Generates an HTML META tag, thus it can be used in Lua Pages.
--- @param name String with the name of the cookie.
--- @param value String with the value of the cookie.
--- @param options Table with the options (optional).
-
-function M.sethtml (name, value, options)
-	write(format('<meta http-equiv="Set-Cookie" content="%s">', 
-		build(name, value, options)))
 end
 
 
@@ -86,15 +110,19 @@ function M.get (name)
 end
 
 
-----------------------------------------------------------------------------
--- Deletes a cookie, by setting its value to "xxx".
--- @param name String with the name of the cookie.
--- @param options Table with the options (optional).
+	----------------------------------------------------------------------------
+	-- Deletes a cookie, by setting its value to "xxx" and Max-Age = 0.
+	-- @param name String with the name of the cookie.
+	-- @param options Table with the options (optional; note that path and
+	-- domain combine with the name to identify the cookie).
 
-function M.delete (name, options)
-	options = options or {}
-	options.expires = 1
-	M.set(name, "xxx", options)
-end
+	function M.delete (name, options)
+		M.set(name, "xxx", {
+			path = options.path,
+			domain = options.domain,
+			max_age = "0",
+		})
+	end
+
 
 return M
