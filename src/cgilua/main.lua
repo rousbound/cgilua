@@ -640,9 +640,14 @@ local function build_library_objects(environment, response)
 	-- Call all defined open-functions in the order they were created.
 	----------------------------------------------------------------------
 	L.open = function ()
-		for i = #L._open_functions, 1, -1 do
-			L._open_functions[i]()
+		for i = 1, #L._open_functions do
+			local url = L._open_functions[i]()
+			if url then
+				M.redirect(url)
+				return false -- Interrupts execution of script file
+			end
 		end
+		return true
 	end
 
 	----------------------------------------------------------------------
@@ -703,6 +708,7 @@ function cgilua.main (environment, response)
 	L.buildhandlers()
 	-- Default handler values
 	M.addscripthandler ("lua", M.doscript)
+	M.addscripthandler ("cgilua", M.doscript)
 	M.addscripthandler ("lp", M.handlelp)
 	-- Looks for an optional loader module
 	M.pcall (function () M.loader = require"cgilua.loader" end)
@@ -727,11 +733,12 @@ function cgilua.main (environment, response)
 	M.pcall (function () lfs.chdir (M.script_pdir) end)
 
 	-- Opening functions
-	M.pcall (L.open)
-
-	-- Executes the script
-	-- "return" is not used anywhere
-	M.pcall (function () return M.handle (M.script_file) end)
+	local ok = M.pcall (L.open)
+	if ok then
+		-- Executes the script
+		-- "return" is not used anywhere
+		M.pcall (function () return M.handle (M.script_file) end)
+	end
 
 	-- Closing functions
 	M.pcall (L.close)
