@@ -20,7 +20,7 @@ local os_tmpname = os.tmpname
 local getenv = os.getenv
 local remove = os.remove
 lp.setoutfunc ("cgilua.put")
-lp.setcompatmode (true)
+lp.setcompatmode (false)
 
 -- Module return in first require
 local cgilua = {
@@ -236,7 +236,7 @@ local function build_library_objects(environment, response)
 			else
 				error(err)
 			end
-			M.header("Content-Lenght", #contents)
+			M.header("Content-Length", #contents)
 			M.contentheader (type, subtype)
 			M.put (contents)
 		end
@@ -305,8 +305,6 @@ local function build_library_objects(environment, response)
 		local dir,file = match(path,"^(.-)([^:/\\]*)$")
 		return dir,file
 	end
-
-	M.splitpath = M.splitonlast -- compatibility with previous versions
 
 	----------------------------------------------------------------------------
 	-- Extracts the first and remaining parts of a path

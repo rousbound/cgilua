@@ -240,9 +240,6 @@ function M.persist ()
 	end
 end
 
--- Compatibility
-M.close = M.persist
-
 ------------------------------------------------------------------------------
 -- Prepare session environment:
 -- 1. if there is a session-id, try to open the session;
