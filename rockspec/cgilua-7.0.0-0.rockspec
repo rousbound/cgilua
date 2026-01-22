@@ -30,7 +30,6 @@ build = {
     type = "builtin",
     modules = {
         ["cgilua.main"] = "src/cgilua/main.lua",
-        ["cgilua.authentication"] = "src/cgilua/authentication.lua", 
         ["cgilua.cookies"] = "src/cgilua/cookies.lua", 
         ["cgilua.dispatcher"] = "src/cgilua/dispatcher.lua", 
         ["cgilua.loader"] = "src/cgilua/loader.lua", 

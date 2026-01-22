@@ -251,7 +251,7 @@ M.close = M.persist
 -- Note that this function DOES NOT automatically opens a session if there
 -- is no session-id.
 ------------------------------------------------------------------------------
-function M.enablesession ()
+function M.enable ()
 	if M.already_enabled then -- avoid misuse when a script calls another one
 		return
 	else
