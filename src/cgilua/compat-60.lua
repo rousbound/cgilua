@@ -32,13 +32,6 @@ cgilua.preprocess = cgilua.handlelp
 cgilua.includehtml = lp.include
 
 ----------------------------------------------------------------------------
--- Lua Pages: enable old template syntax
---   $|expression|$  ->  <?lua = expression ?>
---   <!--$$code$$--> ->  <?lua code ?>
-----------------------------------------------------------------------------
-lp.setcompatmode(true)
-
-----------------------------------------------------------------------------
 -- Session aliases (loaded lazily to avoid circular deps)
 ----------------------------------------------------------------------------
 local session_loaded, session = pcall(require, "cgilua.session")

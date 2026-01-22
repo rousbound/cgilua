@@ -691,8 +691,6 @@ function cgilua.main (environment, response)
 	-- build library objects
   local M = build_library_objects (environment, response);
   package.loaded.cgilua = M;
-	-- Main function
-	L.buildhandlers()
 	-- Default handler values
 	M.addscripthandler ("lua", M.doscript)
 	M.addscripthandler ("cgilua", M.doscript)
