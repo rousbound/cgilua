@@ -20,7 +20,7 @@ local os_tmpname = os.tmpname
 local getenv = os.getenv
 local remove = os.remove
 lp.setoutfunc ("cgilua.put")
-lp.setcompatmode (false)
+-- lp.setcompatmode (true)
 
 -- Module return in first require
 local cgilua = {
@@ -558,17 +558,6 @@ local function build_library_objects(environment, response)
 		-- Fill in the QUERY table.
 		M.QUERY = {}
 		urlcode.parsequery (M.servervariable"QUERY_STRING", M.QUERY)
-	end
-
-	----------------------------------------------------------------------------
-	-- Builds the default handler table from cgilua.mime
-	----------------------------------------------------------------------------
-	L.buildhandlers = function()
-		local mime = require "cgilua.mime"
-		for ext, mediatype in pairs(mime) do
-			local t, st = match(mediatype, "([^/]*)/([^/]*)")
-			M.addscripthandler(ext, M.buildplainhandler(t, st))
-		end
 	end
 
 	----------------------------------------------------------------------

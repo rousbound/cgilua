@@ -7,7 +7,7 @@ local cookies = require"cgilua.cookies"
 local lfs = require"lfs"
 local serialize = require"cgilua.serialize".serialize
 
-local assert, ipairs, loadfile, next = assert, ipairs, loadfile, next
+local assert, ipairs, loadfile = assert, ipairs, loadfile
 local strbyte, strformat, strrep = string.byte, string.format, string.rep
 local tinsert = table.insert
 local ioopen = io.open
@@ -32,6 +32,27 @@ local M = {
 		httponly = true,
 	},
 }
+
+------------------------------------------------------------------------------
+-- Removes expired sessions.
+------------------------------------------------------------------------------
+function M.cleanup ()
+	local rem = {} -- array of files to be deleted
+	local now = ostime ()
+	for file in lfs_dir (M.base_dir) do
+		local attr = lfs_attributes(M.base_dir.."/"..file)
+		if attr and attr.mode == 'file' then
+			if attr.modification + M.timeout < now then
+				-- Delay removal to avoid problems during directory traversal
+				tinsert (rem, file)
+			end
+		end
+	end
+	-- Delete data from expired sessions
+	for _, file in ipairs (rem) do
+		osremove (M.base_dir.."/"..file)
+	end
+end
 
 ------------------------------------------------------------------------------
 -- Creates a new identifier.
@@ -76,17 +97,6 @@ function M.filename (id)
 end
 
 ------------------------------------------------------------------------------
--- Deletes a session.
--- @param id Session identifier.
-------------------------------------------------------------------------------
-function M.delete (id)
-	if not M.check_id (id) then
-		return nil, INVALID_SESSION_ID
-	end
-	osremove (M.filename (id))
-end
-
-------------------------------------------------------------------------------
 -- Searches for a file in the base_dir.
 -- @param id Session identifier candidate.
 -- @return Boolean indicating wether the file was found.
@@ -100,6 +110,58 @@ function M.find_file (id)
 		return false
 	end
 end
+
+------------------------------------------------------------------------------
+-- Deletes a session.
+-- @param id Session identifier.
+------------------------------------------------------------------------------
+function M.delete (id)
+	id = id or M.id
+	if not M.check_id (id) then
+		return nil, INVALID_SESSION_ID
+	end
+	osremove (M.filename (id))
+end
+
+------------------------------------------------------------------------------
+-- Loads data from a session.
+-- @param id Session identification.
+-- @return Table with session data or nil in case of error.
+-- @return In case of error, also returns the error message.
+------------------------------------------------------------------------------
+function M.load ()
+	if not M.check_id (M.id) then
+		return nil, INVALID_SESSION_ID
+	end
+	local f, err = loadfile (M.filename (M.id))
+	if not f then
+		return nil, err
+	else
+		return f()
+	end
+end
+
+------------------------------------------------------------------------------
+-- Saves data to a session.
+-- @param id Session identification.
+-- @param data Table with session data to be saved.
+------------------------------------------------------------------------------
+function M.save ()
+	if M.id and type(M.data) == "table" then
+		if not M.check_id (M.id) then
+			return nil, INVALID_SESSION_ID
+		end
+		local fh = assert (ioopen (M.filename (M.id), "w+"))
+		fh:write "return "
+		serialize (M.data, function (s) fh:write(s) end)
+		fh:close()
+	end
+end
+
+
+-----------------------------------------------------------------------------
+-- User API
+-----------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
 -- Creates a new session and returns its identifier.
@@ -116,63 +178,9 @@ function M.new ()
 	until not M.find_file (id)
 	M.id = id
 	M.data = {}
-	M.save (id, M.data)
+	M.save ()
 	cookies.set (M.token_name, id, M.token_options)
 	return id
-end
-
-------------------------------------------------------------------------------
--- Loads data from a session.
--- @param id Session identification.
--- @return Table with session data or nil in case of error.
--- @return In case of error, also returns the error message.
-------------------------------------------------------------------------------
-function M.load (id)
-	if not M.check_id (id) then
-		return nil, INVALID_SESSION_ID
-	end
-	local f, err = loadfile (M.filename (id))
-	if not f then
-		return nil, err
-	else
-		return f()
-	end
-end
-
-------------------------------------------------------------------------------
--- Saves data to a session.
--- @param id Session identification.
--- @param data Table with session data to be saved.
-------------------------------------------------------------------------------
-function M.save (id, data)
-	if not M.check_id (id) then
-		return nil, INVALID_SESSION_ID
-	end
-	local fh = assert (ioopen (M.filename (id), "w+"))
-	fh:write "return "
-	serialize (data, function (s) fh:write(s) end)
-	fh:close()
-end
-
-------------------------------------------------------------------------------
--- Removes expired sessions.
-------------------------------------------------------------------------------
-function M.cleanup ()
-	local rem = {} -- array of files to be deleted
-	local now = ostime ()
-	for file in lfs_dir (M.base_dir) do
-		local attr = lfs_attributes(M.base_dir.."/"..file)
-		if attr and attr.mode == 'file' then
-			if attr.modification + M.timeout < now then
-				-- Delay removal to avoid problems during directory traversal
-				tinsert (rem, file)
-			end
-		end
-	end
-	-- Delete data from expired sessions
-	for _, file in ipairs (rem) do
-		osremove (M.base_dir.."/"..file)
-	end
 end
 
 ------------------------------------------------------------------------------
@@ -192,72 +200,29 @@ function M.logout ()
 	cookies.delete (M.token_name, M.token_options)
 end
 
-------------------------------------------------------------------------------
--- Open a user session based on the id stored in the cookie (if there is one!).
--- This function should be called before the script is executed.
-------------------------------------------------------------------------------
-function M.try_open ()
-	M.cleanup()
-	local id = cookies.get (M.token_name)
-		-- or ?!?!
-	if id then
-		-- try to load session data persisted from last request!
-		if M.check_id (id) then
-			M.data = M.load (id)
-			if M.data then
-				-- There is an open session already
-				M.id = id
-			else
-				-- The session id expired
-				M.id = nil
-			end
-		end
-	end
-end
-
-------------------------------------------------------------------------------
--- Open a specific user session passed as parameter.
-------------------------------------------------------------------------------
-function M.force_open (id)
-	if not id or not M.check_id (id) then
-		return false
-	end
-
-	-- try to load session data persisted from last request!
-	M.id = id
-	M.data = M.load (id)
-	cookies.set (M.token_name, id, M.token_options)
-	return true
-end
-
-------------------------------------------------------------------------------
--- Persist the user session.
--- This function should be called after the script is executed.
-------------------------------------------------------------------------------
-function M.persist ()
-	if M.id and M.data and next (M.data) then
-		M.save (M.id, M.data)
-	end
-end
 
 ------------------------------------------------------------------------------
 -- Prepare session environment:
+-- 0. cleanup old sessions
 -- 1. if there is a session-id, try to open the session;
 -- 2. set the close-function that will persist the session-data.
 --
--- Note that this function DOES NOT automatically opens a session if there
+-- Note that this code DOES NOT automatically opens a session if there
 -- is no session-id.
 ------------------------------------------------------------------------------
-function M.enable ()
-	if M.already_enabled then -- avoid misuse when a script calls another one
-		return
-	else
-		M.already_enabled = true
-	end
+M.cleanup()
 
-	M.try_open ()
-	cgilua.addclosefunction (M.persist)
+local id = cookies.get (M.token_name)
+	-- or ?!?!
+if id then
+	-- try to load session data persisted from last request!
+	if M.check_id (id) and M.find_file(id) then
+		M.id = id
+		M.data = M.load ()
+	end
 end
+
+cgilua.addclosefunction (M.save)
 
 ------------------------------------------------------------------------------
 return M
