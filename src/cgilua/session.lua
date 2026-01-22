@@ -198,7 +198,7 @@ end
 ------------------------------------------------------------------------------
 function M.try_open ()
 	M.cleanup()
-	local id = M.cookies.get (M.token_name)
+	local id = cookies.get (M.token_name)
 		-- or ?!?!
 	if id then
 		-- try to load session data persisted from last request!
