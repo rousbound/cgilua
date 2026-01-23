@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGILua - About</title>
+    <link rel="stylesheet" href="doc.css" type="text/css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div id="app">
+
+    <!-- Header -->
+    <header id="header">
+        <div id="header-logo">
+            <img alt="CGILua logo" src="cgi-128.gif"/>
+        </div>
+        <div id="header-text">
+            <div id="header-title">CGILua</div>
+            <div id="header-subtitle">Building Web Scripts with Lua</div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main">
+        <div id="content">
+
+            <!-- Section Navigation -->
+            <nav class="section-nav">
+                <h3>On this page</h3>
+                <ul>
+                    <li><a href="#history">History</a></li>
+                    <li><a href="#incompatibility">Incompatibilities</a></li>
+                    <li><a href="#license">License</a></li>
+                    <li><a href="#credits">Credits</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <h2><a name="history"></a>History</h2>
+
+            <dl class="history">
+                <dt><strong>Version 6.0.2</strong> [04/Jul/2020]</dt>
+                <dd><ul>
+                    <li>Fix for preventing formatting errors</li>
+                    <li>Small LDoc corrections</li>
+                </ul></dd>
+
+                <dt><strong>Version 6.0.1</strong> [17/May/2019]</dt>
+                <dd><ul>
+                    <li>Bug correction on redirections</li>
+                    <li>Version variables definition</li>
+                    <li>Other minor corrections</li>
+                </ul></dd>
+
+                <dt><strong>Version 6.0.0</strong> [05/Nov/2018]</dt>
+                <dd><ul>
+                    <li>Adapted CGILua SAPI launcher to explore all WSAPI features</li>
+                    <li>SAPI layer removed</li>
+                    <li>Several fixes</li>
+                    <li>Lua 5.3 compatibility</li>
+                </ul></dd>
+
+                <dt><strong>Version 5.2</strong> [22/Apr/2015]</dt>
+                <dd><ul>
+                    <li>Code adapted to work with Lua 5.1 and Lua 5.2</li>
+                </ul></dd>
+
+                <dt><strong>Version 5.1.4</strong> [22/Mar/2010]</dt>
+                <dd><ul>
+                    <li>Fixes file upload reentrancy</li>
+                    <li>New launchers for cgilua that do not depend on kepler_init</li>
+                    <li>Correction on mkurlpath</li>
+                </ul></dd>
+
+                <dt><strong>Version 5.1.3</strong> [9/Mar/2009]</dt>
+                <dd><ul>
+                    <li>Strips utf-8 BOM from templates in lp.include</li>
+                    <li>Fixed reentrancy bug</li>
+                    <li>Fixed reset of cgilua.urlpath</li>
+                </ul></dd>
+
+                <dt><strong>Version 5.1.2</strong> [19/May/2008]</dt>
+                <dd><ul>
+                    <li>Added the <code>cgilua.authentication</code> module</li>
+                    <li><code>cgilua.print</code> now separates arguments with tabs, like Lua <code>print</code></li>
+                    <li>Now <code>print</code> and <code>write</code> are aliases to <code>cgilua.print</code> and <code>cgilua.put</code></li>
+                    <li>Now strips an eventual <code>#!</code> from top of Lua Pages files</li>
+                    <li>CGILua can now process sequential requests in the same Lua state</li>
+                    <li>Better error handling. Wraps error message in valid HTML</li>
+                    <li>Bug fixed: CGILua was ignoring <code>CGILUA_TMP</code> in Windows</li>
+                    <li>Corrected the URL handling for the dispatcher</li>
+                    <li>Better URL handling for different locales</li>
+                    <li>Handling multiple values in the generated URL</li>
+                    <li>Fixed file handle leak in <code>loader.lua</code></li>
+                </ul></dd>
+
+                <dt><strong>Version 5.1.1</strong> [21/Nov/2007]</dt>
+                <dd><ul>
+                    <li>Changed the security policy for scripts. Now scripts have access to all Lua globals, including the <code>debug</code> and <code>os</code> packages</li>
+                    <li>Added the <code>cgilua.dispatcher</code> module</li>
+                    <li>Added default handlers for a set of MIME types</li>
+                    <li>Added functions <code>cgilua.splitonfirst</code> and <code>cgilua.splitonlast</code></li>
+                    <li>Added functions <code>cgilua.tmpfile</code> and <code>cgilua.tmpname</code></li>
+                </ul></dd>
+
+                <dt><strong>Version 5.1.0</strong> [23/Aug/2007]</dt>
+                <dd><ul>
+                    <li>Uses Lua 5.1</li>
+                    <li>Added function <code>cgilua.print</code></li>
+                    <li>Added a generic dispatcher and the concept of CGILua Apps</li>
+                    <li>Replaced the <code>cgi</code> table by <code>cgilua.QUERY</code> and <code>cgilua.POST</code></li>
+                </ul></dd>
+
+                <dt><strong>Version 5.0.1</strong> [20/Sep/2006]</dt>
+                <dd><ul>
+                    <li>Uses Compat-5.1 Release 5</li>
+                    <li>Caches Lua Pages template strings</li>
+                    <li>New configuration examples</li>
+                    <li>Improvements in the Session library</li>
+                </ul></dd>
+
+                <dt><strong>Version 5.0</strong> [23/Jul/2005]</dt>
+                <dd><ul>
+                    <li>CGILua distribution includes now only the Lua files</li>
+                    <li>The Stable library is now distributed with VEnv</li>
+                    <li>Fixed a file upload bug in the CGI and Xavante launchers</li>
+                    <li><code>cgilua.lp.include()</code> now accepts an environment</li>
+                </ul></dd>
+
+                <dt><strong>Version 5.0 beta 2</strong> [23/Dec/2004]</dt>
+                <dd><ul>
+                    <li>Distribution bug fix: stable.lua was missing</li>
+                </ul></dd>
+
+                <dt><strong>Version 5.0 beta</strong> [15/Dec/2004]</dt>
+                <dd><ul>
+                    <li>New ISAPI and Servlet Launchers</li>
+                    <li>New Error Handling features</li>
+                    <li>New persistent data feature (Stable)</li>
+                    <li>Uses the package model for Lua 5.1</li>
+                    <li>Simpler User Session API</li>
+                </ul></dd>
+
+                <dt><strong>Version 5.0 alpha 3</strong> [8/Jun/2004]</dt>
+                <dd></dd>
+
+                <dt><strong>Version 5.0 alpha</strong> [21/Apr/2004]</dt>
+                <dd></dd>
+            </dl>
+
+            <h2><a name="incompatibility"></a>Incompatibility with previous CGILua versions</h2>
+
+            <div class="card">
+                <h3>CGILua 5.2</h3>
+                <ul>
+                    <li>All CGILua 5.2 modules return a table when loaded.</li>
+                    <li>Function <code>cgilua.lp.include</code> behavior changed.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>CGILua 5.1</h3>
+                <ul>
+                    <li>CGILua 5.1 uses <a href="http://www.lua.org">Lua 5.1</a>.</li>
+                    <li>The <code>cgi</code> table is now deprecated. See <a href="manual.html#parameters">Receiving parameters</a> for details.</li>
+                    <li>The template tags have changed. See <a href="manual.html#templates">Lua pages</a> for details.</li>
+                    <li>The use of <code>getenv</code> calls to obtain CGI variables should be replaced by <a href="reference.html#servervariable"><code>cgilua.servervariable</code></a> calls.</li>
+                </ul>
+            </div>
+
+            <h2><a name="license"></a>License</h2>
+
+            <p>CGILua is free software: it can be used for both academic and commercial
+            purposes at absolutely no cost. There are no royalties or GNU-like "copyleft"
+            restrictions. CGILua qualifies as
+            <a href="http://www.opensource.org/docs/definition.html">Open Source</a>
+            software. Its licenses are compatible with
+            <a href="http://www.gnu.org/licenses/gpl.html">GPL</a>. CGILua is not in
+            the public domain.</p>
+
+            <p>The spirit of the license is that you are free to use CGILua for any purpose
+            at no cost without having to ask us. The only requirement is that if you do use
+            CGILua, then you should give us credit by including the appropriate copyright
+            notice somewhere in your product or its documentation.</p>
+
+            <p>The CGILua library is designed and implemented by Roberto Ierusalimschy,
+            Andr&eacute; Carregal and Tom&aacute;s Guisasola. The implementation is not
+            derived from licensed software.</p>
+
+            <hr/>
+
+            <p>Copyright &copy; 2003-2009 Kepler Project.</p>
+            <p>Copyright &copy; 2009-2022 The CGILua Authors.</p>
+
+            <div class="card">
+                <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+                of this software and associated documentation files (the "Software"), to deal
+                in the Software without restriction, including without limitation the rights to
+                use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+                of the Software, and to permit persons to whom the Software is furnished to do
+                so, subject to the following conditions:</p>
+
+                <p>The above copyright notice and this permission notice shall be included in all
+                copies or substantial portions of the Software.</p>
+
+                <p><strong>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+                EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+                MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+                NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+                BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+                ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+                CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                SOFTWARE.</strong></p>
+            </div>
+
+            <h2><a name="credits"></a>Credits</h2>
+
+            <dl class="credits">
+                <dt>CGILua 6.0</dt>
+                <dd>CGILua 6.0 is maintained by Tom&aacute;s Guisasola, including contributions from the
+                community, including several commits by Peter Melnichenko and Jo&atilde;o Dutra Bastos. Jo&atilde;o worked
+                sponsored by the Google Summer of Code program. His project was "Adapt CGILua SAPI launcher
+                to explore all WSAPI features".</dd>
+
+                <dt>CGILua 5.2</dt>
+                <dd>CGILua 5.2 is being maintained by Tom&aacute;s Guisasola
+                with contributions from F&aacute;bio Mascarenhas, Carla Ourofino
+                and others from the community.</dd>
+
+                <dt>CGILua 5.1</dt>
+                <dd>CGILua 5.1 is being maintained by Andr&eacute; Carregal and
+                Tom&aacute;s Guisasola with contributions from F&aacute;bio Mascarenhas
+                and others from the Kepler mailing list.</dd>
+
+                <dt>CGILua 5.0</dt>
+                <dd>CGILua 5.0 was completely redesigned by Roberto Ierusalimschy,
+                Andr&eacute; Carregal and Tom&aacute;s Guisasola as part of the
+                Kepler Project. The implementation is compatible with Lua 5.0 and was coded by
+                Tom&aacute;s Guisasola with invaluable contributions by Ana
+                L&uacute;cia de Moura, F&aacute;bio Mascarenhas and Danilo Tuler.
+                CGILua 5.0 development was sponsored by
+                <a href="http://www.fabricadigital.com.br">F&aacute;brica Digital</a>,
+                <a href="http://www.finep.gov.br/">FINEP</a> and
+                <a href="http://www.cnpq.br/">CNPq</a>.</dd>
+
+                <dt>CGILua 4.0</dt>
+                <dd>Ana L&uacute;cia de Moura adapted CGILua 3.2 to Lua 4.0,
+                reimplemented some code and added a few improvements but this
+                version was not officially distributed.</dd>
+
+                <dt>CGILua 3.x</dt>
+                <dd>CGILua was born as the evolution of an early system developed by
+                Renato Ferreira Borges and Andr&eacute; Cl&iacute;nio at
+                <a href="http://www.tecgraf.puc-rio.br">TeCGraf</a>.
+                At the time (circa 1995) there were no CGI tools available and everything
+                was done with shell scripts!<br/>
+                However, the main contribution to CGILua 3 was done by Anna Hester, who
+                consolidated the whole tool and developed a consistent distribution
+                with versions 3.1 and 3.2 (the number was an effort to follow
+                Lua version numbers). This version was widely used on a great
+                variety of systems.</dd>
+            </dl>
+
+            <h2><a name="contact"></a>Contact Us</h2>
+
+            <p>To report bugs or contribute, visit the <a href="https://github.com/lunarmodules/cgilua">GitHub project</a>.</p>
+
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav id="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon"><span class="material-icons">home</span></span>
+            <span class="nav-label">Home</span>
+        </a>
+        <a href="manual.html" class="nav-item">
+            <span class="nav-icon"><span class="material-icons">menu_book</span></span>
+            <span class="nav-label">Manual</span>
+        </a>
+        <a href="reference.html" class="nav-item">
+            <span class="nav-icon"><span class="material-icons">code</span></span>
+            <span class="nav-label">Reference</span>
+        </a>
+        <a href="libraries.html" class="nav-item">
+            <span class="nav-icon"><span class="material-icons">extension</span></span>
+            <span class="nav-label">Libraries</span>
+        </a>
+        <a href="about.html" class="nav-item active">
+            <span class="nav-icon"><span class="material-icons">info</span></span>
+            <span class="nav-label">About</span>
+        </a>
+    </nav>
+
+</div>
+
+</body>
+</html>

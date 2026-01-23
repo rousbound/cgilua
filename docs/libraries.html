@@ -1,134 +1,135 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>CGILua: Building Web Scripts with Lua</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGILua - Libraries</title>
     <link rel="stylesheet" href="doc.css" type="text/css"/>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
-<div id="container">
-	
-<div id="product">
-	<div id="product_logo">
-		<img alt="CGILua logo" src="cgi-128.gif"/>
-	</div>
-	<div id="product_name"><big><strong>CGILua</strong></big></div>
-	<div id="product_description">Building Web Scripts with Lua</div>
-</div> <!-- id="product" -->
+<div id="app">
 
-<div id="main">
-	
-<div id="navigation">
-<h1>CGILua</h1>
-	<ul>
-		<li><a href="index.html">Home</a>
-		</li>
-		<li><a href="manual.html">Manual</a>
-		</li>
-		<li><a href="reference.html">Reference</a>
-		</li>
-		<li><strong>Libraries</strong>
-			<ul>
-				<li><a href="libraries.html#cookies">Cookies</a></li>
-				<li><a href="libraries.html#serialize">Serialize</a></li>
-				<li><a href="libraries.html#session">Session</a></li>
-			</ul>
-		</li>
-		<li><a href="sapi.html">SAPI</a></li>
-		<li><a href="license.html">License</a></li>
-	</ul>
-</div> <!-- id="navigation" -->
+    <!-- Header -->
+    <header id="header">
+        <div id="header-logo">
+            <img alt="CGILua logo" src="cgi-128.gif"/>
+        </div>
+        <div id="header-text">
+            <div id="header-title">CGILua</div>
+            <div id="header-subtitle">Building Web Scripts with Lua</div>
+        </div>
+    </header>
 
-<div id="content">
+    <!-- Main Content -->
+    <main id="main">
+        <div id="content">
 
-<h2>Overview</h2>
+            <!-- Section Navigation -->
+            <nav class="section-nav">
+                <h3>On this page</h3>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#cookies">Cookies</a></li>
+                    <li><a href="#serialize">Serialize</a></li>
+                    <li><a href="#session">Session</a></li>
+                </ul>
+            </nav>
 
-<p>CGILua includes a set of external libraries that allows the handling
-of authentication, cookies, dispatching, serialized data and sessions.
-To use these libraries just <code>require</code> them in your CGILua <code>config.lua</code> or script file.</p>
+            <h2><a name="overview"></a>Overview</h2>
 
-<h2><a name="serialize"></a>Serialize</h2>
+            <p>CGILua includes a set of external libraries that allows the handling
+            of cookies, serialized data and sessions.
+            To use these libraries just <code>require</code> them in your CGILua <code>config.lua</code> or script file.</p>
 
-<dl class="reference">
-    <dt><strong><code>cgilua.serialize (table, outfunc[, indent[, prefix]])</code></strong></dt>
-    <dd>Serializes a <code>table</code> using <code>outfunc</code> as the function
-    to be used to generate the output; <code>indent</code> as an optional string
-    with the indentation pattern; <code>prefix</code> as an optional string with
-    the indentation prefix (it is used to store the actual indentation between the
-    recursion calls).<br/>
-    Some restrictions must be noted: values of types <em>function</em> and
-    <em>userdata</em> are not serialized; tables with cycles are not serialized.<br/>
-    Returns nothing.</dd>
-</dl>
+            <h2><a name="cookies"></a>Cookies</h2>
 
-<hr/>
+            <dl class="reference">
+                <dt><a name="set"></a><strong><code>cgilua.cookies.set (name, value[, options])</code></strong></dt>
+                <dd>Sets the <code>value</code> of the cookie with a given <code>name</code>.
+                The optional table <code>options</code> is used to give the values of
+                the cookies attributes: expires, path, domain, secure. This function
+                should be called before the HTTP headers are sent and before any output
+                is generated, so it must not be used inside a Lua Page.<br/>
+                This function sends a cookie with the response. If you need to create
+                a cookie inside the generated response or if the cookie needs to be set
+                inside the client, use <code>cgilua.cookies.sethtml</code> instead.<br/>
+                Returns nothing.</dd>
 
-<h2><a name="cookies"></a>Cookies</h2>
+                <dt><a name="get"></a><strong><code>cgilua.cookies.get (name)</code></strong></dt>
+                <dd>Gets the value of the cookie with the given <code>name</code>.<br/>
+                Returns a string with the value of the cookie.</dd>
 
-<dl class="reference">
+                <dt><a name="delete"></a><strong><code>cgilua.cookies.delete (name[, options])</code></strong></dt>
+                <dd>Deletes a cookie with a given <code>name</code> (setting its value
+                to <code>xxx</code>).
+                This function should be called
+                before the HTTP headers are sent and before any output is generated.<br/>
+                Returns nothing.</dd>
+            </dl>
 
-    <dt><a name="set"></a><strong><code>cgilua.cookies.set (name, value[, options])</code></strong></dt>
-    <dd>Sets the <code>value</code> of the cookie with a given <code>name</code>.
-    The optional table <code>options</code> is used togive the values of
-    the cookies attributes: expires, path, domain, secure. This function
-    should be called before the HTTP headers are sent and before any output
-    is generated, so it must not be used inside a Lua Page.<br/>
-    This function sends a cookie with the response. If you need to create
-    a cookie inside the generated response or if the cookie needs to be set
-    inside the client, use <code>cgilua.cookies.sethtml</code> instead.<br/>
-    Returns nothing.</dd>
+            <h2><a name="serialize"></a>Serialize</h2>
 
-    <dt><a name="get"></a><strong><code>cgilua.cookies.get (name)</code></strong></dt>
-    <dd>Gets the value of the cookie with the given <code>name</code>.<br/>
-    Returns a string with the value of the cookie.</dd>
-    
-  
-  
-    <dt><a name="delete"></a><strong><code>cgilua.cookies.delete (name[, options])</code></strong></dt>
-    <dd>Deletes a cookie with a given <code>name</code> (setting its value
-    to <code>xxx</code>).
-    This function should be called
-    before the HTTP headers are sent and before any output is generated.<br/>
-    Returns nothing.</dd>
-</dl>
+            <dl class="reference">
+                <dt><strong><code>cgilua.serialize (table, outfunc[, indent[, prefix]])</code></strong></dt>
+                <dd>Serializes a <code>table</code> using <code>outfunc</code> as the function
+                to be used to generate the output; <code>indent</code> as an optional string
+                with the indentation pattern; <code>prefix</code> as an optional string with
+                the indentation prefix (it is used to store the actual indentation between the
+                recursion calls).<br/>
+                Some restrictions must be noted: values of types <em>function</em> and
+                <em>userdata</em> are not serialized; tables with cycles are not serialized.<br/>
+                Returns nothing.</dd>
+            </dl>
 
-<hr/>
+            <h2><a name="session"></a>Session</h2>
 
+            <dl class="reference">
+                <dt><a name="new"></a><strong><code>cgilua.session.new ()</code></strong></dt>
+                <dd>Creates a new session identifier.<br/>
+                Returns the new session identifier.</dd>
 
+                <dt><a name="destroy"></a><strong><code>cgilua.session.destroy ()</code></strong></dt>
+                <dd>Destroys the current session.<br/>
+                Returns nothing.</dd>
 
-<h2><a name="session"></a>Session</h2>
+                <dt><a name="logout"></a><strong><code>cgilua.session.logout ()</code></strong></dt>
+                <dd>Destroys the current session. Send cookie invalidation to client.<br/>
+                Returns nothing.</dd>
 
-<dl class="reference">
-    <dt><a name="new"></a><strong><code>cgilua.session.new ()</code></strong></dt>
-    <dd>Creates a new session identifier.<br/>
-    Returns the new session identifier.</dd>
+                <dt><a name="data"></a><strong><code>cgilua.session.data</code></strong></dt>
+                <dd>Table which holds the user session data.</dd>
+            </dl>
 
-    <dt><a name="destroy"></a><strong><code>cgilua.session.destroy ()</code></strong></dt>
-    <dd>Destroys the current session.<br/>
-    Returns nothing.</dd>
+        </div>
+    </main>
 
-    <dt><a name="logout"></a><strong><code>cgilua.session.logout ()</code></strong></dt>
-    <dd>Destroys the current session. Send cookie invalidation to client.<br/>
-    Returns nothing.</dd>
+    <!-- Bottom Navigation -->
+    <nav id="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon"><span class="material-icons">home</span></span>
+            <span class="nav-label">Home</span>
+        </a>
+        <a href="manual.html" class="nav-item">
+            <span class="nav-icon"><span class="material-icons">menu_book</span></span>
+            <span class="nav-label">Manual</span>
+        </a>
+        <a href="reference.html" class="nav-item">
+            <span class="nav-icon"><span class="material-icons">code</span></span>
+            <span class="nav-label">Reference</span>
+        </a>
+        <a href="libraries.html" class="nav-item active">
+            <span class="nav-icon"><span class="material-icons">extension</span></span>
+            <span class="nav-label">Libraries</span>
+        </a>
+        <a href="about.html" class="nav-item">
+            <span class="nav-icon"><span class="material-icons">info</span></span>
+            <span class="nav-label">About</span>
+        </a>
+    </nav>
 
-    <dt><a name="data"></a><strong><code>cgilua.session.data</code></strong></dt>
-    <dd>Table which holds the user session data.</dd>
-
-    
-</dl>
-
-</div> <!-- id="content" -->
-
-</div> <!-- id="main" -->
-
-<div id="about">
-	<p><a href="http://validator.w3.org/check?uri=referer">Valid XHTML 1.0!</a></p>
-	<p><small>$Id: libraries.html,v 1.34 2007/12/05 19:41:13 carregal Exp $</small></p>
-</div> <!-- id="about" -->
-
-</div> <!-- id="container" -->
+</div>
 
 </body>
-</html> 
+</html>
