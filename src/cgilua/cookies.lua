@@ -97,19 +97,6 @@ end
 
 
 ------------------------------------------------------------------------------
--- Sets a value to a cookie, with the given options.
--- Generates an HTML META tag, thus it can be used in Lua Pages.
--- @param name String with the name of the cookie.
--- @param value String with the value of the cookie.
--- @param options Table with the options (optional).
-------------------------------------------------------------------------------
-function M.sethtml (name, value, options)
-	write(format('<meta http-equiv="Set-Cookie" content="%s">',
-		build(name, value, options)))
-end
-
-
-------------------------------------------------------------------------------
 -- Gets the value of a cookie.
 -- @param name String with the name of the cookie.
 -- @return String with the value associated with the cookie.

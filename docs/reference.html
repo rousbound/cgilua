@@ -240,7 +240,13 @@ handled and presented to the user. The consist of:</p>
 <dl class="reference">
     <dt><a name="addclosefunction"></a><strong><code>cgilua.addclosefunction (func)</code></strong></dt>
     <dd>Defines a function (<code>func</code>) to be called after the execution
-    of the script requested.<br/>
+    of the script requested.
+		<br>
+		If (func) returns a value, it halts the execution of all other opening functions and skip execution of the request script. 
+		<br>
+		The value is assumed to be an url which the client should be redirected to.  
+
+		<br/>
     Returns nothing.</dd>
     
     <dt><a name="addopenfunction"></a><strong><code>cgilua.addopenfunction (func)</code></strong></dt>
