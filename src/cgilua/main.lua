@@ -243,22 +243,6 @@ local function build_library_objects(environment, response)
 	end
 
 	----------------------------------------------------------------------------
-	-- Builds a handler that sends a header and the processed file.
-	-- Processes the file as a Lua Page.
-	-- @param type String with the type of the header.
-	-- @param subtype String with the subtype of the header.
-	-- @return Function (which receives a filename as argument) that produces
-	--      the header and processes the given file.
-	----------------------------------------------------------------------------
-	M.buildprocesshandler = function  (type, subtype)
-		return function (filename)
-			local env = L.buildscriptenv()
-			M.contentheader (type, subtype)
-			lp.include (filename, env)
-		end
-	end
-
-	----------------------------------------------------------------------------
 	-- Create an URL path to be used as a link to a CGILua script
 	-- @param script String with the name of the script.
 	-- @param args Table with arguments to script (optional).

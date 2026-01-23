@@ -31,7 +31,6 @@
                 <h3>On this page</h3>
                 <ul>
                     <li><a href="#intro">Introduction</a></li>
-                    <li><a href="#installation">Installation</a></li>
                     <li><a href="#config">Configuration</a></li>
                     <li><a href="#scripts">Lua Scripts</a></li>
                     <li><a href="#templates">Lua Pages</a></li>
@@ -97,18 +96,6 @@
             One typical use would be registering the <em>open</em> and <em>close</em> functions
             in order to change the request processing behavior.</p>
 
-            <h2><a name="installation"></a>Installation</h2>
-
-            <p>CGILua follows the
-            <a href="http://www.inf.puc-rio.br/~roberto/pil2/chapter15.pdf">package model</a>
-            for Lua 5.1, therefore it should be "installed" in your <code>package.path</code>.</p>
-
-            <p>You can also install CGILua using <a href="http://www.luarocks.org">LuaRocks</a>:</p>
-
-<pre class="example">
-luarocks install cgilua
-</pre>
-
             <h2><a name="config"></a>Configuration</h2>
 
             <p>Some of the uses of <code>config.lua</code> customization are:</p>
@@ -118,9 +105,7 @@ luarocks install cgilua
                 <dd>A handler is responsible for the response of a request.
                 You can add new CGILua handlers using
                 <a href="reference.html#addscripthandler"><code>cgilua.addscripthandler</code></a>
-                (see also <a href="reference.html#buildplainhandler"><code>cgilua.buildplainhandler</code></a>
-                and <a href="reference.html#buildprocesshandler"><code>cgilua.buildprocesshandler</code></a>
-                for functions that build simple handlers).</dd>
+                .</dd>
 
                 <dt><strong>POST Data Sizes</strong></dt>
                 <dd>You can change the POST data size limits using
@@ -209,81 +194,6 @@ cgilua.put([[
 &lt;/html&gt;]])
 </pre>
 
-            <p>Another example using a Lua control structure, variables, and the concatenation operator:</p>
-
-<pre class="example">
-cgilua.htmlheader()
-
-if cgilua.QUERY.language == 'english' then
-   greeting = 'Hello World!'
-elseif cgilua.QUERY.language == 'portuguese' then
-   greeting = 'Ol&aacute; Mundo!'
-else
-   greeting = '[unknown language]'
-end
-
-cgilua.put('&lt;html&gt;')
-cgilua.put('&lt;head&gt;')
-cgilua.put('  &lt;title&gt;'..greeting..'&lt;/title&gt;')
-cgilua.put('&lt;/head&gt;')
-cgilua.put('&lt;body&gt;')
-cgilua.put('  &lt;strong&gt;'..greeting..'&lt;/strong&gt;')
-cgilua.put('&lt;/body&gt;')
-cgilua.put('&lt;/html&gt;')
-</pre>
-
-            <h2><a name="templates"></a>Lua Pages</h2>
-
-            <p>A Lua Page is a text template file which will be processed by CGILua
-            before the HTTP server sends it to the client. Lua Pages have a default
-            <code>.lp</code> extension. They are a simpler way to make a dynamic page
-            because there is no need to send the HTTP headers.</p>
-
-            <p>The fundamental Lua Page markups are:</p>
-
-            <dl class="reference">
-                <dt><strong><code>&lt;?lua <em>chunk</em> ?&gt;</code></strong></dt>
-                <dd>Processes and merges the Lua <em>chunk</em> execution results where
-                the markup is located in the template. The alternative form
-                <code>&lt;% <em>chunk</em> %&gt;</code> can also be used.</dd>
-
-                <dt><strong><code>&lt;?lua= <em>expression</em> ?&gt;</code></strong></dt>
-                <dd>Processes and merges the Lua <em>expression</em> evaluation where the
-                markup is located in the template. The alternative form
-                <code>&lt;%= <em>expression</em> %&gt;</code> can also be used.</dd>
-            </dl>
-
-            <p>The second example could be written using a Lua Page like:</p>
-
-<pre class="example">
-&lt;html&gt;
-&lt;?lua
-if cgilua.QUERY.language == 'english' then
-  greeting = 'Hello World!'
-elseif cgilua.QUERY.language == 'portuguese' then
-  greeting = 'Ol&aacute; Mundo!'
-else
-  greeting = '[unknown language]'
-end
-?&gt;
-&lt;head&gt;
-  &lt;title&gt;&lt;%= greeting %&gt;&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;strong&gt;&lt;%= greeting %&gt;&lt;/strong&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
-            <p>HTML tags and Lua Page tags can be freely intermixed. A loop example:</p>
-
-<pre class="example">
-&lt;ul&gt;
-   &lt;% for i, item in ipairs(list) do %&gt;
-   &lt;li&gt;&lt;%= item %&gt;&lt;/li&gt;
-   &lt;% end %&gt;
-&lt;/ul&gt;
-</pre>
 
             <h2><a name="parameters"></a>Receiving parameters: QUERY and POST tables</h2>
 
@@ -391,6 +301,58 @@ else
 end
 </pre>
 
+            <h2><a name="templates"></a>Lua Pages</h2>
+
+            <p>A Lua Page is a text template file which will be processed by CGILua
+            before the HTTP server sends it to the client. Lua Pages have a default
+            <code>.lp</code> extension. They are a simpler way to make a dynamic page
+            because there is no need to send the HTTP headers.</p>
+
+            <p>The fundamental Lua Page markups are:</p>
+
+            <dl class="reference">
+                <dt><strong><code>&lt;?lua <em>chunk</em> ?&gt;</code></strong></dt>
+                <dd>Processes and merges the Lua <em>chunk</em> execution results where
+                the markup is located in the template. The alternative form
+                <code>&lt;% <em>chunk</em> %&gt;</code> can also be used.</dd>
+
+                <dt><strong><code>&lt;?lua= <em>expression</em> ?&gt;</code></strong></dt>
+                <dd>Processes and merges the Lua <em>expression</em> evaluation where the
+                markup is located in the template. The alternative form
+                <code>&lt;%= <em>expression</em> %&gt;</code> can also be used.</dd>
+            </dl>
+
+            <p>The second example could be written using a Lua Page like:</p>
+
+<pre class="example">
+&lt;html&gt;
+&lt;?lua
+if cgilua.QUERY.language == 'english' then
+  greeting = 'Hello World!'
+elseif cgilua.QUERY.language == 'portuguese' then
+  greeting = 'Ol&aacute; Mundo!'
+else
+  greeting = '[unknown language]'
+end
+?&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;%= greeting %&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;strong&gt;&lt;%= greeting %&gt;&lt;/strong&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+            <p>HTML tags and Lua Page tags can be freely intermixed. A loop example:</p>
+
+<pre class="example">
+&lt;ul&gt;
+   &lt;% for i, item in ipairs(list) do %&gt;
+   &lt;li&gt;&lt;%= item %&gt;&lt;/li&gt;
+   &lt;% end %&gt;
+&lt;/ul&gt;
+</pre>
         </div>
     </main>
 

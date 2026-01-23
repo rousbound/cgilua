@@ -261,7 +261,7 @@ img {
 /* Reference cards */
 dl.reference {
     background-color: var(--card-bg);
-    padding: 20px 24px;
+    padding: 10px 14px;
     border: solid var(--border-color) 1px;
     border-radius: 8px;
     margin: 16px 0;
@@ -394,7 +394,7 @@ dl.history dd ul {
     }
 
     .nav-label {
-        display: none;
+        /* display: none; */
     }
 
     .nav-item {
