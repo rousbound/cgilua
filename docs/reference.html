@@ -48,33 +48,55 @@
             <p>Headers functions are used to change the HTTP response headers:</p>
 
             <dl class="reference">
-                <dt><a name="contentheader"></a><strong><code>cgilua.contentheader (type, subtype)</code></strong></dt>
-                <dd>Sends a <em>Content-type</em> header with the given values of type and
-                sub-type.<br/>
-                Both arguments are strings: <code>type</code> is the header type;
-                <code>subtype</code> is the header sub-type.<br/>
-                Returns nothing.</dd>
+                <dt><a name="contentheader"></a><strong>cgilua.contentheader</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.contentheader</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">type</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">subtype</span> <span class="badge badge-string">string</span></span>
+                        </span>)
+                    </div>
+                    Sends a <em>Content-type</em> header with the given values of type and sub-type.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="header"></a><strong><code>cgilua.header (header, value)</code></strong></dt>
-                <dd>Sends a generic header. This function should <em>not</em> be used to
-                generate a <em>Content-type</em> nor a <em>Location</em> header because
-                some launchers/web-servers use different functions for this purpose.<br/>
-                Both arguments are strings: <code>header</code> is the name of the header;
-                <code>value</code> is its value.<br/>
-                Returns nothing.</dd>
+                <dt><a name="header"></a><strong>cgilua.header</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.header</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">header</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">value</span> <span class="badge badge-string">string</span></span>
+                        </span>)
+                    </div>
+                    Sends a generic header. This function should <em>not</em> be used to
+                    generate a <em>Content-type</em> nor a <em>Location</em> header because
+                    some launchers/web-servers use different functions for this purpose.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="htmlheader"></a><strong><code>cgilua.htmlheader ()</code></strong></dt>
-                <dd>Sends the header of an HTML file (<em>Content-type: text/html</em>).<br/>
-                Returns nothing.</dd>
+                <dt><a name="htmlheader"></a><strong>cgilua.htmlheader</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.htmlheader</span> ()
+                    </div>
+                    Sends the header of an HTML file (<em>Content-type: text/html</em>).<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="redirect"></a><strong><code>cgilua.redirect (url, args)</code></strong></dt>
-                <dd>Sends the header to force a redirection to the given URL adding the
-                parameters in table <code>args</code> to the new URL.<br/>
-                The first argument (<code>url</code>) is the URL the browser should be
-                redirected to; the second one (<code>args</code>) is an optional table
-                which could have pairs <em>name = value</em> that will be encoded to form
-                a valid URL (see function <a href="#encodetable">cgilua.urlcode.encodetable</a>).<br/>
-                Returns nothing.</dd>
+                <dt><a name="redirect"></a><strong>cgilua.redirect</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.redirect</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">url</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">args</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>)
+                    </div>
+                    Sends the header to force a redirection to the given URL adding the
+                    parameters in table <code>args</code> to the new URL.
+                    The <code>args</code> table can have pairs <em>name = value</em> that will be encoded
+                    (see <a href="#encodetable">cgilua.urlcode.encodetable</a>).<br/>
+                    Returns nothing.
+                </dd>
             </dl>
 
             <h2><a name="contents"></a>Content Generation</h2>
@@ -83,27 +105,56 @@
             generate URLs in the CGILua format:</p>
 
             <dl class="reference">
-                <dt><a name="mkabsoluteurl"></a><strong><code>cgilua.mkabsoluteurl (path)</code></strong></dt>
-                <dd>Creates an absolute URL containing the given URL <code>path</code>.<br/>
-                Returns the resulting absolute URL.</dd>
+                <dt><a name="mkabsoluteurl"></a><strong>cgilua.mkabsoluteurl</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.mkabsoluteurl</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">path</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    Creates an absolute URL containing the given URL <code>path</code>.<br/>
+                    Returns the resulting absolute URL.
+                </dd>
 
-                <dt><a name="mkurlpath"></a><strong><code>cgilua.mkurlpath (script [, args])</code></strong></dt>
-                <dd>Creates an URL path to be used as a link to a CGILua <code>script</code>
-                using the optional table of arguments (<code>args</code>). The arguments are
-                used in the URL as query string parameters.<br/>
-                Returns the resulting URL.</dd>
+                <dt><a name="mkurlpath"></a><strong>cgilua.mkurlpath</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.mkurlpath</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">script</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">args</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    Creates a URL path to be used as a link to a CGILua <code>script</code>
+                    using the optional table of arguments. The arguments are
+                    used in the URL as query string parameters.<br/>
+                    Returns the resulting URL.
+                </dd>
 
-                <dt><a name="print"></a><strong><code>cgilua.print (...)</code></strong></dt>
-                <dd>Sends the given arguments to the client. This function converts all its
-                arguments to strings before sending them to the server thus it does not
-                raise errors like <a href="#put">cgilua.put</a>.<br/>
-                Returns nothing.</dd>
+                <dt><a name="print"></a><strong>cgilua.print</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.print</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">...</span> <span class="badge badge-any">any</span></span>
+                        </span>)
+                    </div>
+                    Sends the given arguments to the client. This function converts all its
+                    arguments to strings before sending them to the server thus it does not
+                    raise errors like <a href="#put">cgilua.put</a>.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="put"></a><strong><code>cgilua.put (...)</code></strong></dt>
-                <dd>Sends the given arguments to the client. This function should
-                always be used; do not use Lua's <code>print</code> or <code>io.write</code>
-                for output otherwise your script may not work for every launching method.<br/>
-                Returns nothing.</dd>
+                <dt><a name="put"></a><strong>cgilua.put</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.put</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">...</span> <span class="badge badge-string">string</span> <span class="badge badge-number">number</span></span>
+                        </span>)
+                    </div>
+                    Sends the given arguments to the client. This function should
+                    always be used; do not use Lua's <code>print</code> or <code>io.write</code>
+                    for output otherwise your script may not work for every launching method.<br/>
+                    Returns nothing.
+                </dd>
             </dl>
 
             <h2><a name="prep"></a>Lua Pages</h2>
@@ -112,46 +163,90 @@
             behavior of this processing:</p>
 
             <dl class="reference">
-                <dt><a name="handlelp"></a><strong><code>cgilua.handlelp (filename[, env])</code></strong></dt>
-                <dd>Equivalent to <a href="#include"><code>cgilua.lp.include</code></a> but
-                sends the HTML header before the pre-processed file.<br/>
-                Returns nothing.</dd>
+                <dt><a name="handlelp"></a><strong>cgilua.handlelp</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.handlelp</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">filename</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">env</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>)
+                    </div>
+                    Equivalent to <a href="#include"><code>cgilua.lp.include</code></a> but
+                    sends the HTML header before the pre-processed file.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="compile"></a><strong><code>cgilua.lp.compile (string)</code></strong></dt>
-                <dd>Compile a piece of code given as a string into a Lua function.
-                The string is translated with
-                <a href="#translate"><code>cgilua.lp.translate</code></a>
-                into another string which is transformed into a function with
-                <code>loadstring</code>.
-                The resulting function is cached internally and reused if the same piece of
-                code is given.<br/>
-                Returns a function.</dd>
+                <dt><a name="compile"></a><strong>cgilua.lp.compile</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.lp.compile</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">string</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-function">function</span>
+                    </div>
+                    Compile a piece of code given as a string into a Lua function.
+                    The string is translated with
+                    <a href="#translate"><code>cgilua.lp.translate</code></a>
+                    into another string which is transformed into a function with
+                    <code>loadstring</code>.
+                    The resulting function is cached internally and reused if the same piece of
+                    code is given.<br/>
+                    Returns a function.
+                </dd>
 
-                <dt><a name="include"></a><strong><code>cgilua.lp.include (filename[, env])</code></strong></dt>
-                <dd>Pre-processes a Lua Page template (given by <code>filename</code>) and sends the results
-                to the client. The file content is processed by <a href="#compile"><code>cgilua.lp.compile</code></a>
-                and no headers are sent. If an optional environment table is passed, the file is executed with this
-                environment instead of the global one. This can be used to sandbox your scripts.<br/>
-                Returns nothing.</dd>
+                <dt><a name="include"></a><strong>cgilua.lp.include</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.lp.include</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">filename</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">env</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>)
+                    </div>
+                    Pre-processes a Lua Page template and sends the results
+                    to the client. The file content is processed by <a href="#compile"><code>cgilua.lp.compile</code></a>
+                    and no headers are sent. If an optional environment table is passed, the file is executed with this
+                    environment instead of the global one. This can be used to sandbox your scripts.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="setcompatmode"></a><strong><code>cgilua.lp.setcompatmode (boolean)</code></strong></dt>
-                <dd>Turns on or off the compatibility mode. Turning it on will make the
-                Lua Pages preprocessor understand the <em>expression fields</em> and
-                <em>code fields</em> structures used by previous versions of CGILua.<br/>
-                Default value: <code>true</code><br/>
-                Returns nothing.</dd>
+                <dt><a name="setcompatmode"></a><strong>cgilua.lp.setcompatmode</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.lp.setcompatmode</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">enable</span> <span class="badge badge-boolean">boolean</span></span>
+                        </span>)
+                    </div>
+                    Turns on or off the compatibility mode. Turning it on will make the
+                    Lua Pages preprocessor understand the <em>expression fields</em> and
+                    <em>code fields</em> structures used by previous versions of CGILua.<br/>
+                    Default value: <code>true</code><br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="setoutfunc"></a><strong><code>cgilua.lp.setoutfunc (funcname)</code></strong></dt>
-                <dd>Defines the name of the output function for templates. The Lua Pages
-                preprocessor will generate calls to the function with the given
-                <code>funcname</code> (a string).<br/>
-                Returns nothing.</dd>
+                <dt><a name="setoutfunc"></a><strong>cgilua.lp.setoutfunc</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.lp.setoutfunc</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">funcname</span> <span class="badge badge-string">string</span></span>
+                        </span>)
+                    </div>
+                    Defines the name of the output function for templates. The Lua Pages
+                    preprocessor will generate calls to the function with the given
+                    <code>funcname</code>.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="translate"></a><strong><code>cgilua.lp.translate (string)</code></strong></dt>
-                <dd>Uses the Lua Pages preprocessor to generate a string corresponding to
-                the Lua code that executes the Lua chunks and/or expressions inside the
-                given <code>string</code>.<br/>
-                Returns a string with the resulting Lua code.</dd>
+                <dt><a name="translate"></a><strong>cgilua.lp.translate</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.lp.translate</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">string</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    Uses the Lua Pages preprocessor to generate a string corresponding to
+                    the Lua code that executes the Lua chunks and/or expressions inside the
+                    given <code>string</code>.<br/>
+                    Returns a string with the resulting Lua code.
+                </dd>
             </dl>
 
             <h2><a name="variables"></a>CGILua Variables</h2>
@@ -160,37 +255,44 @@
             the CGI environment variables depending on the Web server and launcher used:</p>
 
             <dl class="reference">
-                <dt><a name="script_file"></a><strong><code>cgilua.script_file</code></strong></dt>
+                <dt><a name="script_file"></a><strong>cgilua.script_file</strong> <span class="badge badge-string">string</span></dt>
                 <dd>The file name of the running script. Obtained from
                 <a href="#script_path"><code>cgilua.script_path</code></a>.</dd>
 
-                <dt><a name="script_path"></a><strong><code>cgilua.script_path</code></strong></dt>
+                <dt><a name="script_path"></a><strong>cgilua.script_path</strong> <span class="badge badge-string">string</span></dt>
                 <dd>The complete path of the running script. This variable is usually the
                 same as the CGI environment variable <code>PATH_TRANSLATED</code>.</dd>
 
-                <dt><a name="script_pdir"></a><strong><code>cgilua.script_pdir</code></strong></dt>
+                <dt><a name="script_pdir"></a><strong>cgilua.script_pdir</strong> <span class="badge badge-string">string</span></dt>
                 <dd>The directory of the running script. Obtained from
                 <a href="#script_path"><code>cgilua.script_path</code></a>.</dd>
 
-                <dt><a name="script_vdir"></a><strong><code>cgilua.script_vdir</code></strong></dt>
+                <dt><a name="script_vdir"></a><strong>cgilua.script_vdir</strong> <span class="badge badge-string">string</span></dt>
                 <dd>The virtual directory of the running script. Obtained from
                 <a href="#script_vpath"><code>cgilua.script_vpath</code></a>.</dd>
 
-                <dt><a name="script_vpath"></a><strong><code>cgilua.script_vpath</code></strong></dt>
+                <dt><a name="script_vpath"></a><strong>cgilua.script_vpath</strong> <span class="badge badge-string">string</span></dt>
                 <dd>The complete virtual path of the running script. Equivalent to the
                 CGI environment variable <code>PATH_INFO</code>.</dd>
 
-                <dt><a name="servervariable"></a><strong><code>cgilua.servervariable (varname)</code></strong></dt>
-                <dd>Returns a string with the value of the CGI environment variable
-                corresponding to <code>varname</code>. For a list of CGI variables please refer to
-                <a href="#sapi">SAPI.Request.servervariable</a></dd>
+                <dt><a name="servervariable"></a><strong>cgilua.servervariable</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.servervariable</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">varname</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span> <span class="badge badge-nil">nil</span>
+                    </div>
+                    Returns a string with the value of the CGI environment variable
+                    corresponding to <code>varname</code>. For a list of CGI variables please refer to
+                    <a href="#sapi">SAPI.Request.servervariable</a>
+                </dd>
 
-                <dt><a name="tmp_path"></a><strong><code>cgilua.tmp_path</code></strong></dt>
+                <dt><a name="tmp_path"></a><strong>cgilua.tmp_path</strong> <span class="badge badge-string">string</span></dt>
                 <dd>The directory used by <a href="#tmpfile"><code>cgilua.tmpfile</code></a>.
-                Obtained by checking <code>os.getenv("TEMP")</code>, <code>os.getenv ("TMP")</code> and
+                Obtained by checking <code>os.getenv("TEMP")</code>, <code>os.getenv("TMP")</code> and
                 <code>"/tmp"</code> in that order.</dd>
 
-                <dt><a name="urlpath"></a><strong><code>cgilua.urlpath</code></strong></dt>
+                <dt><a name="urlpath"></a><strong>cgilua.urlpath</strong> <span class="badge badge-string">string</span></dt>
                 <dd>The name of the script. Equivalent to the
                 CGI environment variable <code>SCRIPT_NAME</code>.</dd>
             </dl>
@@ -201,21 +303,42 @@
             handled and presented to the user:</p>
 
             <dl class="reference">
-                <dt><a name="errorlog"></a><strong><code>cgilua.errorlog (string)</code></strong></dt>
-                <dd>Sends the given <code>string</code> to the error log file.<br/>
-                Returns nothing.</dd>
+                <dt><a name="errorlog"></a><strong>cgilua.errorlog</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.errorlog</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">message</span> <span class="badge badge-string">string</span></span>
+                        </span>)
+                    </div>
+                    Sends the given <code>message</code> to the error log file.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="seterrorhandler"></a><strong><code>cgilua.seterrorhandler (func)</code></strong></dt>
-                <dd>Sets the <em>error handler</em> function to <code>func</code>.
-                This function is called by Lua when an error occurs. It receives the error
-                message generated by Lua and it is responsible for generating and returning
-                the correct error message to be used by CGILua.<br/>
-                Returns nothing.</dd>
+                <dt><a name="seterrorhandler"></a><strong>cgilua.seterrorhandler</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.seterrorhandler</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
+                        </span>)
+                    </div>
+                    Sets the <em>error handler</em> function.
+                    This function is called by Lua when an error occurs. It receives the error
+                    message generated by Lua and it is responsible for generating and returning
+                    the correct error message to be used by CGILua.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="seterroroutput"></a><strong><code>cgilua.seterroroutput (func)</code></strong></dt>
-                <dd>Sets the <em>error output</em> function to <code>func</code>.
-                This function is called by Lua to generate the error output itself.<br/>
-                Returns nothing.</dd>
+                <dt><a name="seterroroutput"></a><strong>cgilua.seterroroutput</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.seterroroutput</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
+                        </span>)
+                    </div>
+                    Sets the <em>error output</em> function.
+                    This function is called by Lua to generate the error output itself.<br/>
+                    Returns nothing.
+                </dd>
             </dl>
 
             <h2><a name="behavior"></a>CGILua Behavior</h2>
@@ -223,51 +346,103 @@
             <p>The behavior of CGILua can be configured using this set of functions:</p>
 
             <dl class="reference">
-                <dt><a name="addclosefunction"></a><strong><code>cgilua.addclosefunction (func)</code></strong></dt>
-                <dd>Defines a function (<code>func</code>) to be called after the execution
-                of the script requested.<br/>
-                Returns nothing.</dd>
+                <dt><a name="addclosefunction"></a><strong>cgilua.addclosefunction</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.addclosefunction</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
+                        </span>)
+                    </div>
+                    Defines a function to be called after the execution
+                    of the script requested.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="addopenfunction"></a><strong><code>cgilua.addopenfunction (func)</code></strong></dt>
-                <dd>Defines a function (<code>func</code>) to be called before the execution
-                of the script requested. If the function returns a value, it halts the execution
-                and the value is assumed to be a URL for redirection.<br/>
-                Returns nothing.</dd>
+                <dt><a name="addopenfunction"></a><strong>cgilua.addopenfunction</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.addopenfunction</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
+                        </span>)
+                    </div>
+                    Defines a function to be called before the execution
+                    of the script requested. If the function returns a value, it halts the execution
+                    and the value is assumed to be a URL for redirection.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="addscripthandler"></a><strong><code>cgilua.addscripthandler (ext, func)</code></strong></dt>
-                <dd>Defines a function (<code>func</code>) to pre-process files with a
-                certain extension (<code>ext</code>). The default configuration uses
-                <a href="#doscript"><code>cgilua.doscript</code></a> to process Lua Scripts
-                (<code>.lua</code> files) and <a href="#handlelp"><code>cgilua.handlelp</code></a>
-                to process Lua Pages (<code>.lp</code> files).<br/>
-                Returns nothing.</dd>
+                <dt><a name="addscripthandler"></a><strong>cgilua.addscripthandler</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.addscripthandler</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">ext</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
+                        </span>)
+                    </div>
+                    Defines a function to pre-process files with a
+                    certain extension. The default configuration uses
+                    <a href="#doscript"><code>cgilua.doscript</code></a> to process Lua Scripts
+                    (<code>.lua</code> files) and <a href="#handlelp"><code>cgilua.handlelp</code></a>
+                    to process Lua Pages (<code>.lp</code> files).<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="buildplainhandler"></a><strong><code>cgilua.buildplainhandler (type, subtype)</code></strong></dt>
-                <dd>Creates a <em>script handler</em> that sends the given header and the plain
-                file requested. The <em>Content-type</em> header is formed by the two arguments;
-                the created function will receive a <em>filename</em> as its only argument
-                and will return the given filename untouched.<br/>
-                Returns a function.</dd>
+                <dt><a name="buildplainhandler"></a><strong>cgilua.buildplainhandler</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.buildplainhandler</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">type</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">subtype</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-function">function</span>
+                    </div>
+                    Creates a <em>script handler</em> that sends the given header and the plain
+                    file requested. The <em>Content-type</em> header is formed by the two arguments;
+                    the created function will receive a <em>filename</em> as its only argument
+                    and will return the given filename untouched.<br/>
+                    Returns a function.
+                </dd>
 
-                <dt><a name="buildprocesshandler"></a><strong><code>cgilua.buildprocesshandler (type, subtype)</code></strong></dt>
-                <dd>Creates a <em>script handler</em> that sends the given header and the
-                processed file requested. The <em>Content-type</em> header is formed by the
-                two arguments; the created function will receive a <em>filename</em> as its
-                only argument and will return the given filename pre-processed by the
-                function <a href="#include">cgilua.lp.include</a>.<br/>
-                Returns a function.</dd>
+                <dt><a name="buildprocesshandler"></a><strong>cgilua.buildprocesshandler</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.buildprocesshandler</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">type</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">subtype</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-function">function</span>
+                    </div>
+                    Creates a <em>script handler</em> that sends the given header and the
+                    processed file requested. The <em>Content-type</em> header is formed by the
+                    two arguments; the created function will receive a <em>filename</em> as its
+                    only argument and will return the given filename pre-processed by the
+                    function <a href="#include">cgilua.lp.include</a>.<br/>
+                    Returns a function.
+                </dd>
 
-                <dt><a name="setmaxfilesize"></a><strong><code>cgilua.setmaxfilesize (size)</code></strong></dt>
-                <dd>Sets the maximum <code>size</code> (in bytes) for each uploaded file.
-                This value is bounded by the <em>maximum total input size</em> (see
-                <a href="#setmaxinput">cgilua.setmaxinput</a>). This function only takes
-                effect if used before POST data is processed.<br/>
-                Returns nothing.</dd>
+                <dt><a name="setmaxfilesize"></a><strong>cgilua.setmaxfilesize</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.setmaxfilesize</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">size</span> <span class="badge badge-number">number</span></span>
+                        </span>)
+                    </div>
+                    Sets the maximum <code>size</code> (in bytes) for each uploaded file.
+                    This value is bounded by the <em>maximum total input size</em> (see
+                    <a href="#setmaxinput">cgilua.setmaxinput</a>). This function only takes
+                    effect if used before POST data is processed.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="setmaxinput"></a><strong><code>cgilua.setmaxinput (size)</code></strong></dt>
-                <dd>Sets the <em>maximum total input</em> <code>size</code> allowed (in bytes).
-                This function only takes effect if used before POST data is processed.<br/>
-                Returns nothing.</dd>
+                <dt><a name="setmaxinput"></a><strong>cgilua.setmaxinput</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.setmaxinput</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">size</span> <span class="badge badge-number">number</span></span>
+                        </span>)
+                    </div>
+                    Sets the <em>maximum total input</em> <code>size</code> allowed (in bytes).
+                    This function only takes effect if used before POST data is processed.<br/>
+                    Returns nothing.
+                </dd>
             </dl>
 
             <h2><a name="urlcode"></a>URL Encoding Functions</h2>
@@ -275,65 +450,151 @@
             <p>CGILua encoding functions allow the processing of URL strings:</p>
 
             <dl class="reference">
-                <dt><a name="encodetable"></a><strong><code>cgilua.urlcode.encodetable (table)</code></strong></dt>
-                <dd><em>URL-encode</em> the elements of a <code>table</code> creating a
-                string to be used as a URL for passing data/parameters to another script.<br/>
-                Returns a string representing the encoded argument table.</dd>
+                <dt><a name="encodetable"></a><strong>cgilua.urlcode.encodetable</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.urlcode.encodetable</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">args</span> <span class="badge badge-table">table</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    <em>URL-encode</em> the elements of a <code>table</code> creating a
+                    string to be used as a URL for passing data/parameters to another script.<br/>
+                    Returns a string representing the encoded argument table.
+                </dd>
 
-                <dt><a name="escape"></a><strong><code>cgilua.urlcode.escape (string)</code></strong></dt>
-                <dd><em>URL-encode</em> a <code>string</code>.<br/>
-                Returns the encoded string.</dd>
+                <dt><a name="escape"></a><strong>cgilua.urlcode.escape</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.urlcode.escape</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">str</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    <em>URL-encode</em> a string.<br/>
+                    Returns the encoded string.
+                </dd>
 
-                <dt><a name="insertfield"></a><strong><code>cgilua.urlcode.insertfield (args, name, value)</code></strong></dt>
-                <dd>Adds the given <code>value</code> to the field indexed by <code>name</code>
-                in the <code>args</code> table. If the field already has a value, it is
-                transformed into a table with this value at index <code>1</code> and
-                the new value at index <code>2</code>.<br/>
-                Returns nothing.</dd>
+                <dt><a name="insertfield"></a><strong>cgilua.urlcode.insertfield</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.urlcode.insertfield</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">args</span> <span class="badge badge-table">table</span></span>
+                            <span class="fn-param"><span class="fn-param-name">name</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">value</span> <span class="badge badge-string">string</span></span>
+                        </span>)
+                    </div>
+                    Adds the given <code>value</code> to the field indexed by <code>name</code>
+                    in the <code>args</code> table. If the field already has a value, it is
+                    transformed into a table with this value at index <code>1</code> and
+                    the new value at index <code>2</code>.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="parsequery"></a><strong><code>cgilua.urlcode.parsequery (query, args)</code></strong></dt>
-                <dd>Parse URL-encoded request data. This could be the <code>query</code>
-                part of the script URL or URL-encoded POST data. Each decoded
-                <em>name = value</em> pair is inserted into the <code>args</code> table.<br/>
-                Returns nothing.</dd>
+                <dt><a name="parsequery"></a><strong>cgilua.urlcode.parsequery</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.urlcode.parsequery</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">query</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">args</span> <span class="badge badge-table">table</span></span>
+                        </span>)
+                    </div>
+                    Parse URL-encoded request data. This could be the <code>query</code>
+                    part of the script URL or URL-encoded POST data. Each decoded
+                    <em>name = value</em> pair is inserted into the <code>args</code> table.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="unescape"></a><strong><code>cgilua.urlcode.unescape (string)</code></strong></dt>
-                <dd><em>URL-decodes</em> a <code>string</code>.<br/>
-                Returns the decoded string.</dd>
+                <dt><a name="unescape"></a><strong>cgilua.urlcode.unescape</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.urlcode.unescape</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">str</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    <em>URL-decodes</em> a string.<br/>
+                    Returns the decoded string.
+                </dd>
             </dl>
 
             <h2><a name="auxiliar"></a>Auxiliary Functions</h2>
 
             <dl class="reference">
-                <dt><a name="doif"></a><strong><code>cgilua.doif (filepath)</code></strong></dt>
-                <dd>Executes a file (given by <code>filepath</code>) if it exists.
-                Returns the values returned by the execution, or
-                <code>nil</code> followed by an error message if the file does not exist.</dd>
+                <dt><a name="doif"></a><strong>cgilua.doif</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.doif</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">filepath</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-any">any</span> <span class="badge badge-nil">nil</span>
+                    </div>
+                    Executes a file if it exists.
+                    Returns the values returned by the execution, or
+                    <code>nil</code> followed by an error message if the file does not exist.
+                </dd>
 
-                <dt><a name="doscript"></a><strong><code>cgilua.doscript (filepath)</code></strong></dt>
-                <dd>Executes a file (given by <code>filepath</code>). Raises an error if it
-                occurs. In case of success, returns the values returned by the execution.</dd>
+                <dt><a name="doscript"></a><strong>cgilua.doscript</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.doscript</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">filepath</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-any">any</span>
+                    </div>
+                    Executes a file. Raises an error if it
+                    occurs. In case of success, returns the values returned by the execution.
+                </dd>
 
-                <dt><a name="pack"></a><strong><code>cgilua.pack (...)</code></strong></dt>
-                <dd>Returns a new table with all the passed arguments stored in it.</dd>
+                <dt><a name="pack"></a><strong>cgilua.pack</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.pack</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">...</span> <span class="badge badge-any">any</span></span>
+                        </span>) <span class="badge badge-table">table</span>
+                    </div>
+                    Returns a new table with all the passed arguments stored in it.
+                </dd>
 
-                <dt><a name="splitonfirst"></a><strong><code>cgilua.splitonfirst (path)</code></strong></dt>
-                <dd>Returns two strings with the "first directory" and the "remaining path" of the given
-                <code>path</code> string split on the first separator ("/" or "\").</dd>
+                <dt><a name="splitonfirst"></a><strong>cgilua.splitonfirst</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.splitonfirst</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">path</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span>, <span class="badge badge-string">string</span>
+                    </div>
+                    Returns two strings with the "first directory" and the "remaining path" of the given
+                    <code>path</code> string split on the first separator ("/" or "\").
+                </dd>
 
-                <dt><a name="splitonlast"></a><strong><code>cgilua.splitonlast (path)</code></strong></dt>
-                <dd>Returns two strings with the "directory path" and "file" parts of the given
-                <code>path</code> string split on the last separator ("/" or "\").
-                This function used to be called <code>cgilua.splitpath</code>.</dd>
+                <dt><a name="splitonlast"></a><strong>cgilua.splitonlast</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.splitonlast</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">path</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span>, <span class="badge badge-string">string</span>
+                    </div>
+                    Returns two strings with the "directory path" and "file" parts of the given
+                    <code>path</code> string split on the last separator ("/" or "\").
+                    This function used to be called <code>cgilua.splitpath</code>.
+                </dd>
 
-                <dt><a name="tmpfile"></a><strong><code>cgilua.tmpfile (dir[, namefunction])</code></strong></dt>
-                <dd>Returns a temporary file in the <code><a href="#tmp_path">cgilua.tmp_path</a></code> directory
-                using an optional name generator. If the name generator function is not passed,
-                <code>cgilua.tmpname</code> is used. The file is removed by CGILua after the request has been
-                processed.</dd>
+                <dt><a name="tmpfile"></a><strong>cgilua.tmpfile</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.tmpfile</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">dir</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">namefunction</span> <span class="badge badge-function badge-optional">function</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    Returns a temporary file in the <code><a href="#tmp_path">cgilua.tmp_path</a></code> directory
+                    using an optional name generator. If the name generator function is not passed,
+                    <code>cgilua.tmpname</code> is used. The file is removed by CGILua after the request has been
+                    processed.
+                </dd>
 
-                <dt><a name="tmpname"></a><strong><code>cgilua.tmpname ()</code></strong></dt>
-                <dd>Returns a temporary name using an adjusted version of <code>os.tmpname</code>.</dd>
+                <dt><a name="tmpname"></a><strong>cgilua.tmpname</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.tmpname</span> () <span class="badge badge-string">string</span>
+                    </div>
+                    Returns a temporary name using an adjusted version of <code>os.tmpname</code>.
+                </dd>
             </dl>
 
             <h2><a name="sapi"></a>Server API (SAPI)</h2>
@@ -349,66 +610,115 @@
             <h3>SAPI.Request</h3>
 
             <dl class="reference">
-                <dt><strong><code>SAPI.Request.getpostdata ([n])</code></strong></dt>
-                <dd>Gets a block of <em>POST data</em>. The optional parameter <em>n</em> is
-                the number of bytes to read (a default block size is used if no parameter is
-                passed).<br/>
-                Returns the block as a Lua string.</dd>
+                <dt><strong>SAPI.Request.getpostdata</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">SAPI.Request.getpostdata</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">n</span> <span class="badge badge-number badge-optional">number</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    Gets a block of <em>POST data</em>. The optional parameter <em>n</em> is
+                    the number of bytes to read (a default block size is used if no parameter is
+                    passed).<br/>
+                    Returns the block as a Lua string.
+                </dd>
 
-                <dt><strong><code>SAPI.Request.servervariable (varname)</code></strong></dt>
-                <dd>Gets the value of a server environment variable. The argument can be
-                one of the defined CGI Variables:
-                <ul>
-                    <li><strong><code>AUTH_TYPE</code></strong> - Authentication method used</li>
-                    <li><strong><code>CONTENT_LENGTH</code></strong> - The length of the content</li>
-                    <li><strong><code>CONTENT_TYPE</code></strong> - The content type of the data</li>
-                    <li><strong><code>GATEWAY_INTERFACE</code></strong> - CGI specification revision</li>
-                    <li><strong><code>PATH_INFO</code></strong> - Extra path information</li>
-                    <li><strong><code>PATH_TRANSLATED</code></strong> - Physical path translation</li>
-                    <li><strong><code>QUERY_STRING</code></strong> - The query string data</li>
-                    <li><strong><code>REMOTE_ADDR</code></strong> - IP address of the client</li>
-                    <li><strong><code>REMOTE_HOST</code></strong> - Hostname of the client</li>
-                    <li><strong><code>REMOTE_IDENT</code></strong> - RFC 931 identification</li>
-                    <li><strong><code>REMOTE_USER</code></strong> - Authenticated username</li>
-                    <li><strong><code>REQUEST_METHOD</code></strong> - GET, HEAD, POST, etc.</li>
-                    <li><strong><code>SCRIPT_NAME</code></strong> - Virtual path to the script</li>
-                    <li><strong><code>SERVER_NAME</code></strong> - Server's hostname or IP</li>
-                    <li><strong><code>SERVER_PORT</code></strong> - Port number</li>
-                    <li><strong><code>SERVER_PROTOCOL</code></strong> - Protocol name/revision</li>
-                    <li><strong><code>SERVER_SOFTWARE</code></strong> - Server software name/version</li>
-                </ul>
-                Header lines are placed with the prefix <code>HTTP_</code> followed by the
-                header name (with <code>-</code> changed to <code>_</code>).<br/>
-                Returns a string.</dd>
+                <dt><strong>SAPI.Request.servervariable</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">SAPI.Request.servervariable</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">varname</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span>
+                    </div>
+                    Gets the value of a server environment variable. The argument can be
+                    one of the defined CGI Variables:
+                    <ul>
+                        <li><strong><code>AUTH_TYPE</code></strong> - Authentication method used</li>
+                        <li><strong><code>CONTENT_LENGTH</code></strong> - The length of the content</li>
+                        <li><strong><code>CONTENT_TYPE</code></strong> - The content type of the data</li>
+                        <li><strong><code>GATEWAY_INTERFACE</code></strong> - CGI specification revision</li>
+                        <li><strong><code>PATH_INFO</code></strong> - Extra path information</li>
+                        <li><strong><code>PATH_TRANSLATED</code></strong> - Physical path translation</li>
+                        <li><strong><code>QUERY_STRING</code></strong> - The query string data</li>
+                        <li><strong><code>REMOTE_ADDR</code></strong> - IP address of the client</li>
+                        <li><strong><code>REMOTE_HOST</code></strong> - Hostname of the client</li>
+                        <li><strong><code>REMOTE_IDENT</code></strong> - RFC 931 identification</li>
+                        <li><strong><code>REMOTE_USER</code></strong> - Authenticated username</li>
+                        <li><strong><code>REQUEST_METHOD</code></strong> - GET, HEAD, POST, etc.</li>
+                        <li><strong><code>SCRIPT_NAME</code></strong> - Virtual path to the script</li>
+                        <li><strong><code>SERVER_NAME</code></strong> - Server's hostname or IP</li>
+                        <li><strong><code>SERVER_PORT</code></strong> - Port number</li>
+                        <li><strong><code>SERVER_PROTOCOL</code></strong> - Protocol name/revision</li>
+                        <li><strong><code>SERVER_SOFTWARE</code></strong> - Server software name/version</li>
+                    </ul>
+                    Header lines are placed with the prefix <code>HTTP_</code> followed by the
+                    header name (with <code>-</code> changed to <code>_</code>).<br/>
+                    Returns a string.
+                </dd>
             </dl>
 
             <h3>SAPI.Response</h3>
 
             <dl class="reference">
-                <dt><strong><code>SAPI.Response.contenttype (header)</code></strong></dt>
-                <dd>Sends the <em>Content-type</em> header to the client. The given
-                header should be in the form "<em>type</em>/<em>subtype</em>".
-                This function must be called before any output is sent.<br/>
-                Returns nothing.</dd>
+                <dt><strong>SAPI.Response.contenttype</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">SAPI.Response.contenttype</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">header</span> <span class="badge badge-string">string</span></span>
+                        </span>)
+                    </div>
+                    Sends the <em>Content-type</em> header to the client. The given
+                    header should be in the form "<em>type</em>/<em>subtype</em>".
+                    This function must be called before any output is sent.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><strong><code>SAPI.Response.errorlog (message)</code></strong></dt>
-                <dd>Generates error output using the given string or number.<br/>
-                Returns nothing.</dd>
+                <dt><strong>SAPI.Response.errorlog</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">SAPI.Response.errorlog</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">message</span> <span class="badge badge-string">string</span> <span class="badge badge-number">number</span></span>
+                        </span>)
+                    </div>
+                    Generates error output using the given string or number.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><strong><code>SAPI.Response.header (header, value)</code></strong></dt>
-                <dd>Sends a generic header to the client. The first argument must be the
-                header name, such as "Set-Cookie". The second argument should be its value.<br/>
-                Returns nothing.</dd>
+                <dt><strong>SAPI.Response.header</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">SAPI.Response.header</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">header</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">value</span> <span class="badge badge-string">string</span></span>
+                        </span>)
+                    </div>
+                    Sends a generic header to the client. The first argument must be the
+                    header name, such as "Set-Cookie". The second argument should be its value.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><strong><code>SAPI.Response.redirect (url)</code></strong></dt>
-                <dd>Sends the <em>Location</em> header to the client. The given <code>url</code>
-                should be a string.<br/>
-                Returns nothing.</dd>
+                <dt><strong>SAPI.Response.redirect</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">SAPI.Response.redirect</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">url</span> <span class="badge badge-string">string</span></span>
+                        </span>)
+                    </div>
+                    Sends the <em>Location</em> header to the client.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><strong><code>SAPI.Response.write (...)</code></strong></dt>
-                <dd>Generates output using the given arguments.
-                The arguments must be strings or numbers.<br/>
-                Returns nothing.</dd>
+                <dt><strong>SAPI.Response.write</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">SAPI.Response.write</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">...</span> <span class="badge badge-string">string</span> <span class="badge badge-number">number</span></span>
+                        </span>)
+                    </div>
+                    Generates output using the given arguments.
+                    The arguments must be strings or numbers.<br/>
+                    Returns nothing.
+                </dd>
             </dl>
 
             <h2><a name="index"></a>Alphabetic Index</h2>
