@@ -531,9 +531,9 @@ local function build_library_objects(environment, response)
 		M.Response.write ("<html><head><title>CGILua Error</title></head><body>" .. msg .. "</body></html>")
 	end
 	L.erroroutput = L.default_erroroutput
-	L.default_maxfilesize = 512 * 1024
-	L.maxfilesize = L.default_maxfilesize
-	L.default_maxinput = 1024 * 1024
+	L.default_maxfilesize = 5 * 512 * 1024 -- 5Mb
+	L.maxfilesize = L.default_maxfilesize -- 10Mb
+	L.default_maxinput = 10 * 1024 * 1024
 	L.maxinput = L.default_maxinput
 	L.script_path = false
 
