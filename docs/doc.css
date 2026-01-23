@@ -209,13 +209,13 @@ img {
 
 /* Bottom Navigation */
 #bottom-nav {
-    background-color: var(--primary-color);
+    background-color: var(--card-bg);
     height: var(--nav-height);
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-shrink: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
 }
 
 .nav-item {
@@ -224,26 +224,19 @@ img {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.7);
+    color: #9ca3af;
     padding: 8px 16px;
     border-radius: 8px;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
     min-width: 64px;
 }
 
 .nav-item:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
+    color: #6b7280;
 }
 
 .nav-item.active {
-    color: white;
-}
-
-.nav-item.active .nav-icon {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    padding: 4px 20px;
+    color: var(--accent-color);
 }
 
 .nav-icon {
@@ -251,6 +244,18 @@ img {
     align-items: center;
     justify-content: center;
     margin-bottom: 4px;
+    width: 56px;
+    height: 32px;
+    border-radius: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-item.active .nav-icon {
+    background: #d0e4ff;
+}
+
+.nav-item:hover .nav-icon {
+    background: #e8f0fb;
 }
 
 .nav-label {
@@ -472,6 +477,10 @@ dl.history dd ul {
         min-width: 56px;
     }
 
+    .nav-icon {
+        width: 48px;
+    }
+
     .nav-label {
         font-size: 11px;
     }
@@ -482,13 +491,27 @@ dl.history dd ul {
         column-count: 1;
     }
 
-    .nav-label {
-        /* display: none; */
+    .nav-icon {
+        width: 40px;
     }
 
     .nav-item {
-        padding: 12px;
+        padding: 8px;
+        min-width: 48px;
     }
+}
+
+/* Prism.js overrides */
+pre[class*="language-"] {
+    background-color: var(--code-bg) !important;
+    margin: 16px 0 !important;
+    padding: 16px 24px !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+}
+
+code[class*="language-"] {
+    font-family: "Fira Code", "SF Mono", "Menlo", "Monaco", "Andale Mono", monospace !important;
 }
 
 /* Print styles */
@@ -524,7 +547,7 @@ dl.history dd ul {
         display: none;
     }
 
-    .example {
+    pre[class*="language-"] {
         font-family: "Andale Mono", monospace;
         font-size: 8pt;
         page-break-inside: avoid;
