@@ -26,17 +26,6 @@
     <main id="main">
         <div id="content">
 
-            <!-- Section Navigation -->
-            <!-- <nav class="section-nav"> -->
-                <!-- <h3>On this page</h3> -->
-                <!-- <ul> -->
-                    <!-- <li><a href="#overview">Overview</a></li> -->
-                    <!-- <li><a href="#cookies">Cookies</a></li> -->
-                    <!-- <li><a href="#serialize">Serialize</a></li> -->
-                    <!-- <li><a href="#session">Session</a></li> -->
-                <!-- </ul> -->
-            <!-- </nav> -->
-
             <h2><a name="overview"></a>Overview</h2>
 
             <p>CGILua includes a set of external libraries that allows the handling
@@ -46,60 +35,162 @@
             <h2><a name="cookies"></a>Cookies</h2>
 
             <dl class="reference">
-                <dt><a name="set"></a><strong><code>cgilua.cookies.set (name, value[, options])</code></strong></dt>
-                <dd>Sets the <code>value</code> of the cookie with a given <code>name</code>.
-                The optional table <code>options</code> is used to give the values of
-                the cookies attributes: expires, path, domain, secure. This function
-                should be called before the HTTP headers are sent and before any output
-                is generated, so it must not be used inside a Lua Page.<br/>
-                This function sends a cookie with the response. If you need to create
-                a cookie inside the generated response or if the cookie needs to be set
-                inside the client, use <code>cgilua.cookies.sethtml</code> instead.<br/>
-                Returns nothing.</dd>
+                <dt><a name="set"></a><strong>cgilua.cookies.set</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.cookies.set</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">name</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">value</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">options</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>)
+                    </div>
+                    Sets the <code>value</code> of the cookie with a given <code>name</code>.
+                    The optional table <code>options</code> is used to give the values of
+                    the cookies attributes: expires, path, domain, secure. This function
+                    should be called before the HTTP headers are sent and before any output
+                    is generated, so it must not be used inside a Lua Page.<br/>
+                    This function sends a cookie with the response. If you need to create
+                    a cookie inside the generated response or if the cookie needs to be set
+                    inside the client, use <code>cgilua.cookies.sethtml</code> instead.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="get"></a><strong><code>cgilua.cookies.get (name)</code></strong></dt>
-                <dd>Gets the value of the cookie with the given <code>name</code>.<br/>
-                Returns a string with the value of the cookie.</dd>
+                <dt><a name="sethtml"></a><strong>cgilua.cookies.sethtml</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.cookies.sethtml</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">name</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">value</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">options</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>)
+                    </div>
+                    Sets the <code>value</code> of the cookie with a given <code>name</code> using
+                    an HTML meta tag. Use this when you need to set a cookie inside the generated
+                    HTML response body.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="delete"></a><strong><code>cgilua.cookies.delete (name[, options])</code></strong></dt>
-                <dd>Deletes a cookie with a given <code>name</code> (setting its value
-                to <code>xxx</code>).
-                This function should be called
-                before the HTTP headers are sent and before any output is generated.<br/>
-                Returns nothing.</dd>
+                <dt><a name="get"></a><strong>cgilua.cookies.get</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.cookies.get</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">name</span> <span class="badge badge-string">string</span></span>
+                        </span>) <span class="badge badge-string">string</span> <span class="badge badge-nil">nil</span>
+                    </div>
+                    Gets the value of the cookie with the given <code>name</code>.<br/>
+                    Returns a string with the value of the cookie.
+                </dd>
+
+                <dt><a name="delete"></a><strong>cgilua.cookies.delete</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.cookies.delete</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">name</span> <span class="badge badge-string">string</span></span>
+                            <span class="fn-param"><span class="fn-param-name">options</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>)
+                    </div>
+                    Deletes a cookie with a given <code>name</code>.
+                    This function should be called
+                    before the HTTP headers are sent and before any output is generated.<br/>
+                    Returns nothing.
+                </dd>
             </dl>
 
             <h2><a name="serialize"></a>Serialize</h2>
 
             <dl class="reference">
-                <dt><strong><code>cgilua.serialize (table, outfunc[, indent[, prefix]])</code></strong></dt>
-                <dd>Serializes a <code>table</code> using <code>outfunc</code> as the function
-                to be used to generate the output; <code>indent</code> as an optional string
-                with the indentation pattern; <code>prefix</code> as an optional string with
-                the indentation prefix (it is used to store the actual indentation between the
-                recursion calls).<br/>
-                Some restrictions must be noted: values of types <em>function</em> and
-                <em>userdata</em> are not serialized; tables with cycles are not serialized.<br/>
-                Returns nothing.</dd>
+                <dt><a name="serialize-fn"></a><strong>cgilua.serialize</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.serialize</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">tab</span> <span class="badge badge-table">table</span></span>
+                            <span class="fn-param"><span class="fn-param-name">outfunc</span> <span class="badge badge-function">function</span></span>
+                            <span class="fn-param"><span class="fn-param-name">indent</span> <span class="badge badge-string badge-optional">string</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                            <span class="fn-param"><span class="fn-param-name">prefix</span> <span class="badge badge-string badge-optional">string</span> <span class="badge badge-nil badge-optional">nil</span></span>
+                        </span>)
+                    </div>
+                    Serializes a <code>table</code> using <code>outfunc</code> as the function
+                    to be used to generate the output; <code>indent</code> as an optional string
+                    with the indentation pattern; <code>prefix</code> as an optional string with
+                    the indentation prefix (it is used to store the actual indentation between the
+                    recursion calls).<br/>
+                    Some restrictions must be noted: values of types <em>function</em> and
+                    <em>userdata</em> are not serialized; tables with cycles are not serialized.<br/>
+                    Returns nothing.
+                </dd>
             </dl>
 
             <h2><a name="session"></a>Session</h2>
 
             <dl class="reference">
-                <dt><a name="new"></a><strong><code>cgilua.session.new ()</code></strong></dt>
-                <dd>Creates a new session identifier.<br/>
-                Returns the new session identifier.</dd>
+                <dt><a name="new"></a><strong>cgilua.session.new</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.session.new</span> () <span class="badge badge-string">string</span>
+                    </div>
+                    Creates a new session identifier.<br/>
+                    Returns the new session identifier.
+                </dd>
 
-                <dt><a name="destroy"></a><strong><code>cgilua.session.destroy ()</code></strong></dt>
-                <dd>Destroys the current session.<br/>
-                Returns nothing.</dd>
+                <dt><a name="load"></a><strong>cgilua.session.load</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.session.load</span> () <span class="badge badge-boolean">boolean</span>
+                    </div>
+                    Loads session data from the session file into <code>cgilua.session.data</code>.<br/>
+                    Returns true if successful.
+                </dd>
 
-                <dt><a name="logout"></a><strong><code>cgilua.session.logout ()</code></strong></dt>
-                <dd>Destroys the current session. Send cookie invalidation to client.<br/>
-                Returns nothing.</dd>
+                <dt><a name="save"></a><strong>cgilua.session.save</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.session.save</span> ()
+                    </div>
+                    Saves the current session data to the session file.<br/>
+                    Returns nothing.
+                </dd>
 
-                <dt><a name="data"></a><strong><code>cgilua.session.data</code></strong></dt>
+                <dt><a name="destroy"></a><strong>cgilua.session.destroy</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.session.destroy</span> ()
+                    </div>
+                    Destroys the current session and erases the session data.<br/>
+                    Returns nothing.
+                </dd>
+
+                <dt><a name="logout"></a><strong>cgilua.session.logout</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.session.logout</span> ()
+                    </div>
+                    Destroys the current session and sends cookie invalidation to client.<br/>
+                    Returns nothing.
+                </dd>
+
+                <dt><a name="cleanup"></a><strong>cgilua.session.cleanup</strong></dt>
+                <dd>
+                    <div class="fn-signature">
+                        <span class="fn-name">cgilua.session.cleanup</span> ()
+                    </div>
+                    Removes expired session files from the session directory.<br/>
+                    Returns nothing.
+                </dd>
+
+                <dt><a name="data"></a><strong>cgilua.session.data</strong> <span class="badge badge-table">table</span></dt>
                 <dd>Table which holds the user session data.</dd>
+
+                <dt><a name="id"></a><strong>cgilua.session.id</strong> <span class="badge badge-string">string</span> <span class="badge badge-nil">nil</span></dt>
+                <dd>The current session identifier, or nil if no session is active.</dd>
+
+                <dt><a name="base_dir"></a><strong>cgilua.session.base_dir</strong> <span class="badge badge-string">string</span></dt>
+                <dd>The directory where session files are stored. Default: <code>/tmp</code></dd>
+
+                <dt><a name="timeout"></a><strong>cgilua.session.timeout</strong> <span class="badge badge-number">number</span></dt>
+                <dd>Session timeout in seconds. Default: 600 (10 minutes)</dd>
+
+                <dt><a name="token_name"></a><strong>cgilua.session.token_name</strong> <span class="badge badge-string">string</span></dt>
+                <dd>The name of the session cookie. Default: <code>cgilua_session_identification</code></dd>
             </dl>
 
         </div>
