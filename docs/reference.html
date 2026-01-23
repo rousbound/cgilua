@@ -27,21 +27,21 @@
         <div id="content">
 
             <!-- Section Navigation -->
-            <nav class="section-nav">
-                <h3>On this page</h3>
-                <ul>
-                    <li><a href="#headers">Headers</a></li>
-                    <li><a href="#contents">Content Generation</a></li>
-                    <li><a href="#prep">Lua Pages</a></li>
-                    <li><a href="#variables">Variables</a></li>
-                    <li><a href="#error_handling">Error Handling</a></li>
-                    <li><a href="#behavior">Behavior</a></li>
-                    <li><a href="#urlcode">URL Encoding</a></li>
-                    <li><a href="#auxiliar">Auxiliary</a></li>
-                    <li><a href="#sapi">SAPI</a></li>
-                    <li><a href="#index">Index</a></li>
-                </ul>
-            </nav>
+            <!-- <nav class="section-nav"> -->
+                <!-- <h3>On this page</h3> -->
+                <!-- <ul> -->
+                    <!-- <li><a href="#headers">Headers</a></li> -->
+                    <!-- <li><a href="#contents">Content Generation</a></li> -->
+                    <!-- <li><a href="#prep">Lua Pages</a></li> -->
+                    <!-- <li><a href="#variables">Variables</a></li> -->
+                    <!-- <li><a href="#error_handling">Error Handling</a></li> -->
+                    <!-- <li><a href="#behavior">Behavior</a></li> -->
+                    <!-- <li><a href="#urlcode">URL Encoding</a></li> -->
+                    <!-- <li><a href="#auxiliar">Auxiliary</a></li> -->
+                    <!-- <li><a href="#sapi">SAPI</a></li> -->
+                    <!-- <li><a href="#index">Index</a></li> -->
+                <!-- </ul> -->
+            <!-- </nav> -->
 
             <h2><a name="headers"></a>Headers</h2>
 
@@ -157,97 +157,6 @@
                 </dd>
             </dl>
 
-            <h2><a name="prep"></a>Lua Pages</h2>
-
-            <p>Lua Pages functions are used to process Lua Pages templates and to define the
-            behavior of this processing:</p>
-
-            <dl class="reference">
-                <dt><a name="handlelp"></a><strong>cgilua.handlelp</strong></dt>
-                <dd>
-                    <div class="fn-signature">
-                        <span class="fn-name">cgilua.handlelp</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">filename</span> <span class="badge badge-string">string</span></span>
-                            <span class="fn-param"><span class="fn-param-name">env</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
-                        </span>)
-                    </div>
-                    Equivalent to <a href="#include"><code>cgilua.lp.include</code></a> but
-                    sends the HTML header before the pre-processed file.<br/>
-                    Returns nothing.
-                </dd>
-
-                <dt><a name="compile"></a><strong>cgilua.lp.compile</strong></dt>
-                <dd>
-                    <div class="fn-signature">
-                        <span class="fn-name">cgilua.lp.compile</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">string</span> <span class="badge badge-string">string</span></span>
-                        </span>) <span class="badge badge-function">function</span>
-                    </div>
-                    Compile a piece of code given as a string into a Lua function.
-                    The string is translated with
-                    <a href="#translate"><code>cgilua.lp.translate</code></a>
-                    into another string which is transformed into a function with
-                    <code>loadstring</code>.
-                    The resulting function is cached internally and reused if the same piece of
-                    code is given.<br/>
-                    Returns a function.
-                </dd>
-
-                <dt><a name="include"></a><strong>cgilua.lp.include</strong></dt>
-                <dd>
-                    <div class="fn-signature">
-                        <span class="fn-name">cgilua.lp.include</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">filename</span> <span class="badge badge-string">string</span></span>
-                            <span class="fn-param"><span class="fn-param-name">env</span> <span class="badge badge-table badge-optional">table</span> <span class="badge badge-nil badge-optional">nil</span></span>
-                        </span>)
-                    </div>
-                    Pre-processes a Lua Page template and sends the results
-                    to the client. The file content is processed by <a href="#compile"><code>cgilua.lp.compile</code></a>
-                    and no headers are sent. If an optional environment table is passed, the file is executed with this
-                    environment instead of the global one. This can be used to sandbox your scripts.<br/>
-                    Returns nothing.
-                </dd>
-
-                <dt><a name="setcompatmode"></a><strong>cgilua.lp.setcompatmode</strong></dt>
-                <dd>
-                    <div class="fn-signature">
-                        <span class="fn-name">cgilua.lp.setcompatmode</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">enable</span> <span class="badge badge-boolean">boolean</span></span>
-                        </span>)
-                    </div>
-                    Turns on or off the compatibility mode. Turning it on will make the
-                    Lua Pages preprocessor understand the <em>expression fields</em> and
-                    <em>code fields</em> structures used by previous versions of CGILua.<br/>
-                    Default value: <code>true</code><br/>
-                    Returns nothing.
-                </dd>
-
-                <dt><a name="setoutfunc"></a><strong>cgilua.lp.setoutfunc</strong></dt>
-                <dd>
-                    <div class="fn-signature">
-                        <span class="fn-name">cgilua.lp.setoutfunc</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">funcname</span> <span class="badge badge-string">string</span></span>
-                        </span>)
-                    </div>
-                    Defines the name of the output function for templates. The Lua Pages
-                    preprocessor will generate calls to the function with the given
-                    <code>funcname</code>.<br/>
-                    Returns nothing.
-                </dd>
-
-                <dt><a name="translate"></a><strong>cgilua.lp.translate</strong></dt>
-                <dd>
-                    <div class="fn-signature">
-                        <span class="fn-name">cgilua.lp.translate</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">string</span> <span class="badge badge-string">string</span></span>
-                        </span>) <span class="badge badge-string">string</span>
-                    </div>
-                    Uses the Lua Pages preprocessor to generate a string corresponding to
-                    the Lua code that executes the Lua chunks and/or expressions inside the
-                    given <code>string</code>.<br/>
-                    Returns a string with the resulting Lua code.
-                </dd>
-            </dl>
 
             <h2><a name="variables"></a>CGILua Variables</h2>
 
@@ -346,31 +255,6 @@
             <p>The behavior of CGILua can be configured using this set of functions:</p>
 
             <dl class="reference">
-                <dt><a name="addclosefunction"></a><strong>cgilua.addclosefunction</strong></dt>
-                <dd>
-                    <div class="fn-signature">
-                        <span class="fn-name">cgilua.addclosefunction</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
-                        </span>)
-                    </div>
-                    Defines a function to be called after the execution
-                    of the script requested.<br/>
-                    Returns nothing.
-                </dd>
-
-                <dt><a name="addopenfunction"></a><strong>cgilua.addopenfunction</strong></dt>
-                <dd>
-                    <div class="fn-signature">
-                        <span class="fn-name">cgilua.addopenfunction</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
-                        </span>)
-                    </div>
-                    Defines a function to be called before the execution
-                    of the script requested. If the function returns a value, it halts the execution
-                    and the value is assumed to be a URL for redirection.<br/>
-                    Returns nothing.
-                </dd>
-
                 <dt><a name="addscripthandler"></a><strong>cgilua.addscripthandler</strong></dt>
                 <dd>
                     <div class="fn-signature">
@@ -387,36 +271,31 @@
                     Returns nothing.
                 </dd>
 
-                <dt><a name="buildplainhandler"></a><strong>cgilua.buildplainhandler</strong></dt>
+                <dt><a name="addopenfunction"></a><strong>cgilua.addopenfunction</strong></dt>
                 <dd>
                     <div class="fn-signature">
-                        <span class="fn-name">cgilua.buildplainhandler</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">type</span> <span class="badge badge-string">string</span></span>
-                            <span class="fn-param"><span class="fn-param-name">subtype</span> <span class="badge badge-string">string</span></span>
-                        </span>) <span class="badge badge-function">function</span>
+                        <span class="fn-name">cgilua.addopenfunction</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
+                        </span>)
                     </div>
-                    Creates a <em>script handler</em> that sends the given header and the plain
-                    file requested. The <em>Content-type</em> header is formed by the two arguments;
-                    the created function will receive a <em>filename</em> as its only argument
-                    and will return the given filename untouched.<br/>
-                    Returns a function.
+                    Defines a function to be called before the execution
+                    of the script requested. If the function returns a value, it halts the execution
+                    and the value is assumed to be a URL for redirection.<br/>
+                    Returns nothing.
                 </dd>
 
-                <dt><a name="buildprocesshandler"></a><strong>cgilua.buildprocesshandler</strong></dt>
+                <dt><a name="addclosefunction"></a><strong>cgilua.addclosefunction</strong></dt>
                 <dd>
                     <div class="fn-signature">
-                        <span class="fn-name">cgilua.buildprocesshandler</span> (<span class="fn-params">
-                            <span class="fn-param"><span class="fn-param-name">type</span> <span class="badge badge-string">string</span></span>
-                            <span class="fn-param"><span class="fn-param-name">subtype</span> <span class="badge badge-string">string</span></span>
-                        </span>) <span class="badge badge-function">function</span>
+                        <span class="fn-name">cgilua.addclosefunction</span> (<span class="fn-params">
+                            <span class="fn-param"><span class="fn-param-name">func</span> <span class="badge badge-function">function</span></span>
+                        </span>)
                     </div>
-                    Creates a <em>script handler</em> that sends the given header and the
-                    processed file requested. The <em>Content-type</em> header is formed by the
-                    two arguments; the created function will receive a <em>filename</em> as its
-                    only argument and will return the given filename pre-processed by the
-                    function <a href="#include">cgilua.lp.include</a>.<br/>
-                    Returns a function.
+                    Defines a function to be called after the execution
+                    of the script requested.<br/>
+                    Returns nothing.
                 </dd>
+
 
                 <dt><a name="setmaxfilesize"></a><strong>cgilua.setmaxfilesize</strong></dt>
                 <dd>

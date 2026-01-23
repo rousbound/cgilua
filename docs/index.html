@@ -41,13 +41,10 @@
             from Web forms. CGILua allows the separation of logic and data handling from
             the generation of pages, making it easy to develop web applications with Lua.</p>
 
-            <p>One of advantages of CGILua is its abstraction of the underlying Web server.
-            CGILua can be used with a variety of Web servers and, for each server, with
-            different launchers. A launcher is responsible for the interaction of CGILua
-            and the Web server, for example using ISAPI on IIS or mod_lua on Apache.</p>
-
-            <p>CGILua is free software and uses the same <a href="about.html#license">license</a>
-            as Lua 5.1.</p>
+<pre class="example">
+-- index.cgilua
+cgilua.put("Hello " .. (cgi.name or "World!"))
+</pre>
 
             <h2><a name="download"></a>Download</h2>
 

@@ -27,74 +27,34 @@
         <div id="content">
 
             <!-- Section Navigation -->
-            <nav class="section-nav">
-                <h3>On this page</h3>
-                <ul>
-                    <li><a href="#intro">Introduction</a></li>
-                    <li><a href="#config">Configuration</a></li>
-                    <li><a href="#scripts">Lua Scripts</a></li>
-                    <li><a href="#templates">Lua Pages</a></li>
-                    <li><a href="#parameters">Parameters</a></li>
-                    <li><a href="#dispatching">Dispatching</a></li>
-                    <li><a href="#error_handling">Error Handling</a></li>
-                </ul>
-            </nav>
+            <!-- <nav class="section-nav"> -->
+                <!-- <h3>On this page</h3> -->
+                <!-- <ul> -->
+                    <!-- <li><a href="#intro">Introduction</a></li> -->
+                    <!-- <li><a href="#config">Configuration</a></li> -->
+                    <!-- <li><a href="#scripts">Lua Scripts</a></li> -->
+                    <!-- <li><a href="#templates">Lua Pages</a></li> -->
+                    <!-- <li><a href="#parameters">Parameters</a></li> -->
+                    <!-- <li><a href="#dispatching">Dispatching</a></li> -->
+                    <!-- <li><a href="#error_handling">Error Handling</a></li> -->
+                <!-- </ul> -->
+            <!-- </nav> -->
 
-            <h2><a name="intro"></a>Introduction</h2>
-
-            <p>CGILua uses <a href="http://www.lua.org">Lua</a> as a server-side scripting
-            language for creating dynamic Web pages. Both pure
-            <a href="#scripts">Lua Scripts</a> and
-            <a href="#templates">Lua Pages</a> (LP) are supported by CGILua.
-            A Lua Script is essentially a Lua program that creates the whole contents of
-            a web page and returns it to the client. A Lua Page is a conventional
-            markup text (HTML, XML etc) file that embeds Lua code using some special
-            tags. Those tags are processed by CGILua and resulting page is returned to the
-            client.</p>
-
-            <p>Lua Scripts and Lua Pages are equally easy to use, and choosing one of them
-            basically depends on the characteristics of the resulting page. While Lua
-            Pages are more convenient for the separation of logic and format, Lua Scripts
-            are more adequate for creating pages that are simpler in terms of its structure,
-            but require a more significative amount of internal processing.</p>
-
-            <p>Allowing these two methods to be intermixed, CGILua provides Web applications
-            developers with great flexibility when both requirements are present.</p>
-
-            <h4>Architecture</h4>
-
-            <p>CGILua architecture is divided in two layers. The lower level is represented
-            by the Server API (<a href="reference.html#sapi">SAPI</a>) and the higher level is
-            represented by the CGILua API itself. SAPI is the interface between the web server
-            and the CGILua API, so it needs to be implemented for each Web server and launching
-            method used.</p>
-
-            <p>A launcher is responsible for the interaction of CGILua and the Web server,
-            implementing SAPI for example using ISAPI on IIS or mod_lua on Apache.</p>
-
-            <p>The CGILua API is implemented using only SAPI and is totally portable
-            over different launchers and their supporting Web servers.</p>
-
-            <h4><a name="lifecycle"></a>Request life cycle</h4>
+            <h2><a name="lifecycle"></a>Request life cycle</h4>
 
             <p>CGILua processes requests using a CGI metaphor (even if the launcher is not based
             on CGI) and requests have a life cycle that can be customized by the programmer.
             The CGILua request life cycle consists in the following sequence of steps:</p>
 
             <ol>
-                <li>Add default handlers such as LuaScripts and Lua Pages and commom file formats.</li>
-                <li>Execute the <code>config.lua</code> file, allowing the customization of the next steps.</li>
-                <li>Build the <code>cgilua.POST</code> and <code>cgilua.QUERY</code> tables (processing POST and QUERY data).</li>
-                <li>Change to user script directory.</li>
-                <li>Execute the registered <em>open</em> functions.</li>
-                <li>Execute the requested script with the correct environment.</li>
-                <li>Execute the registered <em>close</em> functions.</li>
-                <li>Change back to the original directory</li>
+                <!-- <li>Add default handlers such as LuaScripts and Lua Pages and commom file formats.</li> -->
+                <li><b> Configure </b><br>Execute the <code>config.lua</code> file, allowing the customization of the next steps.</li>
+                <!-- <li>Change to user script directory.</li> -->
+                <li><b> Open</b>  <br>Execute the registered <em>open</em> functions.</li>
+                <li><b> Execute</b> <br>Execute the requested script with the correct environment.</li>
+                <li><b> Close</b> <br>Execute the registered <em>close</em> functions.</li>
+                <li><b> Reset</b> <br>Change back to the original directory</li>
             </ol>
-
-            <p>Editing the <code>config.lua</code> file one can customize the CGILua behaviour.
-            One typical use would be registering the <em>open</em> and <em>close</em> functions
-            in order to change the request processing behavior.</p>
 
             <h2><a name="config"></a>Configuration</h2>
 
@@ -120,51 +80,6 @@
                 even when an error occurs in the script processing.</dd>
             </dl>
 
-            <p>Previous versions of CGILua loaded a <code>env.lua</code> file from the
-            script directory before processing it. To emulate this with CGILua 5.1 you can
-            use something like:</p>
-
-<pre class="example">
-cgilua.addopenfunction (function ()
-   cgilua.doif ("env.lua")
-end)
-</pre>
-
-            <p>If every script needs to load a module (such as the sessions library), you can do:</p>
-
-<pre class="example">
-require("cgilua.session")
-cgilua.session.setsessiondir(CGILUA_TMP)
-cgilua.addopenfunction (cgilua.session.open)
-cgilua.addclosefunction (cgilua.session.close)
-</pre>
-
-            <p>When some scripts may use the library but others may not,
-            you could define an "enabling" function:</p>
-
-<pre class="example">
-require("cgilua.session")
-cgilua.session.setsessiondir(CGILUA_TMP)
-cgilua.enablesession = function ()
-   cgilua.session.open ()
-   cgilua.addclosefunction (cgilua.session.close)
-end
-</pre>
-
-            <p>Sometimes you need to configure a private libraries directory for each application:</p>
-
-<pre class="example">
-local app_lib_dir = {
-   ["/virtual/path/"] = "/absolute/path/lib/",
-}
-local package = package
-cgilua.addopenfunction (function ()
-   local app = app_lib_dir[cgilua.script_vdir]
-   if app then
-      package.path = app..'/?.lua'..';'..package.path
-   end
-end)
-</pre>
 
             <h2><a name="scripts"></a>Lua Scripts</h2>
 
@@ -224,36 +139,6 @@ cgilua.put([[
             name. All values will be inserted in an indexed table in the order
             in which they are handled.</p>
 
-            <h2><a name="dispatching"></a>Dispatching</h2>
-
-            <p>In the <code>examples</code> folder you can find a dispatching script
-            called <code>app.lua</code> that can be used to handle URLs in the format
-            <code>.../app.lua/<em>app_name</em>/<em>path_info</em></code> in a standard way.</p>
-
-            <p>CGILua applications loading sequence:</p>
-
-            <ul>
-                <li>there is an <em>app_name</em> as the start of <em>path_info</em></li>
-                <li>there is an <code>init.lua</code> file in <code><em>CGILUA_APPS</em>/<em>app_name</em></code></li>
-                <li>changes the current directory to <code><em>CGILUA_APPS</em>/<em>app_name</em></code></li>
-                <li>sets <code>cgilua.app_name</code> to <em>app_name</em></li>
-                <li>adds <code><em>CGILUA_APPS</em>/<em>app_name</em>/lua</code> to the start of <code>package.path</code></li>
-                <li>executes <code>init.lua</code></li>
-            </ul>
-
-            <p>Example using dispatcher with Rails-like convention:</p>
-
-<pre class="example">
-require("cgilua.dispatcher")
-return cgilua.dispatcher.route{"/$controller/$action/$ID", handle, "rails"}
-</pre>
-
-            <p>URLs like <code>.../app.lua/blog/post/edit/2</code> would result in:</p>
-
-<pre class="example">
-handle({controller="post", action="edit", ID="2"})
-</pre>
-
             <h2><a name="error_handling"></a>Error Handling</h2>
 
             <p>There are three functions for error handling in CGILua:</p>
@@ -277,13 +162,7 @@ handle({controller="post", action="edit", ID="2"})
             <p>An example of customizing error handling:</p>
 
 <pre class="example">
-local ip = cgilua.servervariable"REMOTE_ADDR"
-local developers_machines = {
-   ["192.168.0.20"] = true,
-   ["192.168.0.27"] = true,
-}
-
-if developers_machines[ip] then
+if is_dev then
    -- Developer's error treatment: write to the display
    cgilua.seterroroutput (function (msg)
       cgilua.errorlog (msg)
@@ -291,7 +170,7 @@ if developers_machines[ip] then
       msg = string.gsub (msg, "\n", "&lt;br&gt;\n")
       cgilua.put (msg)
    end)
-else
+elseif is_prod then
    -- User's error treatment: shows a standard page
    cgilua.seterroroutput (function (s)
       cgilua.htmlheader ()
@@ -301,59 +180,6 @@ else
 end
 </pre>
 
-            <h2><a name="templates"></a>Lua Pages</h2>
-
-            <p>A Lua Page is a text template file which will be processed by CGILua
-            before the HTTP server sends it to the client. Lua Pages have a default
-            <code>.lp</code> extension. They are a simpler way to make a dynamic page
-            because there is no need to send the HTTP headers.</p>
-
-            <p>The fundamental Lua Page markups are:</p>
-
-            <dl class="reference">
-                <dt><strong><code>&lt;?lua <em>chunk</em> ?&gt;</code></strong></dt>
-                <dd>Processes and merges the Lua <em>chunk</em> execution results where
-                the markup is located in the template. The alternative form
-                <code>&lt;% <em>chunk</em> %&gt;</code> can also be used.</dd>
-
-                <dt><strong><code>&lt;?lua= <em>expression</em> ?&gt;</code></strong></dt>
-                <dd>Processes and merges the Lua <em>expression</em> evaluation where the
-                markup is located in the template. The alternative form
-                <code>&lt;%= <em>expression</em> %&gt;</code> can also be used.</dd>
-            </dl>
-
-            <p>The second example could be written using a Lua Page like:</p>
-
-<pre class="example">
-&lt;html&gt;
-&lt;?lua
-if cgilua.QUERY.language == 'english' then
-  greeting = 'Hello World!'
-elseif cgilua.QUERY.language == 'portuguese' then
-  greeting = 'Ol&aacute; Mundo!'
-else
-  greeting = '[unknown language]'
-end
-?&gt;
-&lt;head&gt;
-  &lt;title&gt;&lt;%= greeting %&gt;&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;strong&gt;&lt;%= greeting %&gt;&lt;/strong&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
-            <p>HTML tags and Lua Page tags can be freely intermixed. A loop example:</p>
-
-<pre class="example">
-&lt;ul&gt;
-   &lt;% for i, item in ipairs(list) do %&gt;
-   &lt;li&gt;&lt;%= item %&gt;&lt;/li&gt;
-   &lt;% end %&gt;
-&lt;/ul&gt;
-</pre>
-        </div>
     </main>
 
     <!-- Bottom Navigation -->
