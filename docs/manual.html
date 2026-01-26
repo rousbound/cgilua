@@ -6,7 +6,7 @@
     <title>CGILua - Manual</title>
     <link rel="stylesheet" href="doc.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -97,7 +97,7 @@
             <p>For example, a HTML document which displays "Hello World!" can
             be generated with the following Lua Script:</p>
 
-<pre><code class="language-lua">cgilua.htmlheader()
+<pre><code class="lua">cgilua.htmlheader()
 cgilua.put([[
 &lt;html&gt;
 &lt;head&gt;
@@ -160,7 +160,7 @@ cgilua.put([[
 
             <p>An example of customizing error handling:</p>
 
-<pre><code class="language-lua">if is_dev then
+<pre><code class="lua">if is_dev then
    -- Developer's error treatment: write to the display
    cgilua.seterroroutput (function (msg)
       cgilua.errorlog (msg)
@@ -205,7 +205,8 @@ end</code></pre>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/lua.min.js"></script>
+<script>document.querySelectorAll('code.lua').forEach(el => hljs.highlightElement(el));</script>
 </body>
 </html>

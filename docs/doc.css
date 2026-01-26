@@ -218,7 +218,9 @@ img {
     border-top: 1px solid var(--border-color);
 }
 
-.nav-item {
+.nav-item,
+.nav-item:link,
+.nav-item:visited {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -235,7 +237,9 @@ img {
     color: #6b7280;
 }
 
-.nav-item.active {
+.nav-item.active,
+.nav-item.active:link,
+.nav-item.active:visited {
     color: var(--accent-color);
 }
 
@@ -501,17 +505,20 @@ dl.history dd ul {
     }
 }
 
-/* Prism.js overrides */
-pre[class*="language-"] {
-    background-color: var(--code-bg) !important;
-    margin: 16px 0 !important;
-    padding: 16px 24px !important;
-    border-radius: 6px !important;
-    font-size: 14px !important;
+/* Highlight.js overrides */
+pre:has(code.hljs) {
+    margin: 16px 0;
+    padding: 0;
+    background: none;
 }
 
-code[class*="language-"] {
-    font-family: "Fira Code", "SF Mono", "Menlo", "Monaco", "Andale Mono", monospace !important;
+pre code.hljs {
+    display: block;
+    background-color: var(--code-bg);
+    padding: 16px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    overflow-x: auto;
 }
 
 /* Print styles */
@@ -547,7 +554,7 @@ code[class*="language-"] {
         display: none;
     }
 
-    pre[class*="language-"] {
+    pre code.hljs {
         font-family: "Andale Mono", monospace;
         font-size: 8pt;
         page-break-inside: avoid;
